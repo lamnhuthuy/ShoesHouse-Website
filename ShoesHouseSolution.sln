@@ -5,6 +5,8 @@ VisualStudioVersion = 16.0.31624.102
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShoesHouse.WebApp", "ShoesHouse.WebApp\ShoesHouse.WebApp.csproj", "{8848F151-9E28-4DC8-A718-E84B3A43ED8E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShoesHouse.Data", "ShoesHouse.Data\ShoesHouse.Data.csproj", "{42ED1343-19DA-42A4-91AA-4BF432213AD9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{8848F151-9E28-4DC8-A718-E84B3A43ED8E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8848F151-9E28-4DC8-A718-E84B3A43ED8E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8848F151-9E28-4DC8-A718-E84B3A43ED8E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{42ED1343-19DA-42A4-91AA-4BF432213AD9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{42ED1343-19DA-42A4-91AA-4BF432213AD9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{42ED1343-19DA-42A4-91AA-4BF432213AD9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{42ED1343-19DA-42A4-91AA-4BF432213AD9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
