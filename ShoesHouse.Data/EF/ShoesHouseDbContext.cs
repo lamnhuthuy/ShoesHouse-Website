@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using ShoesHouse.Data.Configurations;
 using ShoesHouse.Data.Entities;
+using ShoesHouse.Data.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
