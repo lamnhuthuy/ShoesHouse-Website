@@ -24,6 +24,8 @@ namespace ShoesHouse.Data.Configurations
 
             builder.Property(x => x.DateModified).IsRequired(false);
             builder.Property(x => x.DateDeleted).IsRequired(false);
+            builder.Property(x => x.Price).IsRequired(false);
+            builder.Property(x => x.Note).IsRequired(false);
 
             builder.HasOne(x => x.Category).WithMany(y => y.Products);
             builder.HasMany(x => x.ProductImages).WithOne(y => y.Product);
