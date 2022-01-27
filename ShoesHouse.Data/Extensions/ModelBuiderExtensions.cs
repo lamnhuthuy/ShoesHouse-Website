@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using ShoesHouse.Data.Entities;
 using System;
 using System.Collections.Generic;
@@ -151,10 +152,769 @@ namespace ShoesHouse.Data.Extensions
                          Size = 42,
                          CategoryId = 1,
                          DateCreated = DateTime.Now,
-                         OriginalPrice = 2300000
-                     }
+                         OriginalPrice = 1750000
+                     },
+                       new Product
+                       {
+                           Id = 10,
+                           Name = "Joe Freshgoods x New Balance 990V3 Outside Clothes",
+                           Description = "The Joe Freshgoods x New Balance 990V3 “Outside Clothes” is the much anticipated follow up to the Chicago native’s heralded collaboration with the Boston footwear company on the 992 “No Emotions Are Emotions” from 2020. The “Outside Clothes” colorway of the classic 990V3 was released in limited quantities exclusively in Joe Freshgoods’ hometown of Chicago at Garfield Park where he grew up. Accompanied by an advertisement directed by Mike Carson and scored by Alchemist that explains the origins of the design, the multicolor look features beige suede overlays atop an aqua mesh base. A light blue “N” logo appears on both sides of the shoe. Neon green “JFG” branding is printed on the lateral side of the heel and “Outside” and “Clothes” are embroidered in green script on the left and right shoe, respectively. The phrase “Made for Us” appears on the heel. Together, the colors on the shoe: green, brown, and blue, represent grass, dirt, and the sky—all elements of being outside on a warm summer’s day",
+                           Size = 42,
+                           CategoryId = 3,
+                           DateCreated = DateTime.Now,
+                           OriginalPrice = 2400000
+                       },
+                         new Product
+                         {
+                             Id = 11,
+                             Name = "Vans UA Era Classic Sport",
+                             Description = "Creating a pleasant feeling at first sight, Vans Classic Sport Era owns an extremely delicate color scheme, alternating between two gentle but equally youthful Drizzle & Ballad Blue colors to create a trendy look. personalities. The dynamic, flexible Era design is made entirely of high-quality, smooth and soft Textile fabric that promises to bring you the best wearing experience.",
+                             Size = 42,
+                             CategoryId = 5,
+                             DateCreated = DateTime.Now,
+                             OriginalPrice = 2210000
+                         },
+                        new Product
+                        {
+                            Id = 12,
+                            Name = "Superturf Adventure SW x A GW8810",
+                            Description = "The Sean Wotherspoon x adidas Superstar “SuperEarth - Black” is the follow-up release of the debut collaboration between the vintage apparel and footwear curator and adidas. Wotherspoon and adidas’s first “SuperEarth” collaboration took place in August 2010 with this “Black” colorway releasing in October 2021. Consistent with the theme of all of Wotherspoon’s sneaker collaborations, the Superstar SuperEarth is an all-vegan shoe made from recycled materials. The upper features a multicolor embroidered floral motif across either side. Metallic Gold “SuperEarth” and “adidas” branding are printed on the left and right light blue leather heel tabs, respectively. The cream rubber shell toe brings a classic Superstar look onto this modern colorway. Mismatched leather eyelet panels combine with unique “SuperEarth” inspired branding on the left and right tongue tags to form a progressive look",
+                            Size = 42,
+                            CategoryId = 2,
+                            DateCreated = DateTime.Now,
+                            OriginalPrice = 2500000
+                        },
+                         new Product
+                         {
+                             Id = 13,
+                             Name = "Converse Chuck 70 Fuzzy Ambush ",
+                             Description = "Chuck Taylor All Star II Festival with soft, high-elastic Knit knit fabric is the ideal choice for women who like to exercise. The design of the shoe body with eye-catching patterns creates a prominent highlight for the product line. Soft Lunarlon shoe insole provides comfort as well as safety for the wearer despite long-time operation.",
+                             Size = 42,
+                             CategoryId = 4,
+                             DateCreated = DateTime.Now,
+                             OriginalPrice = 1950000
+                         },
+                          new Product
+                          {
+                              Id = 14,
+                              Name = "Fragment x Sacai x Nike LDWaffle Blackened Blue",
+                              Description = "The Fragment x Sacai x Nike LDWaffle “Blackened Blue” is a yet another chapter in the three-way collaboration between Hiroshi Fujiwara and Chitose Abe’s clothing brands and Nike on the hybrid shoe. The “Blackened Blue” is one of multiple colorways of the fusion shoe that combines elements of the Nike LDV and Waffle Racer released by Fragment, Sacai, and Nike in 2021. Black mesh can be found on the base while Blue Void hairy suede appears on the overlays on the forefoot, eyelets, and heel. Two white leather Swooshes are layered over one another on either side. Dual Sacai and Nike branding is printed on the white leather heel tab. Two sets of navy blue laces are placed on top of the stacked tongues. The aforementioned design elements are taken from the original Sacai x Nike LDWaffle. Text reading “The Classic / Fragment : sacai” is printed on the white foam midsole",
+                              Size = 42,
+                              CategoryId = 1,
+                              DateCreated = DateTime.Now,
+                              OriginalPrice = 2110000
+                          },
+                           new Product
+                           {
+                               Id = 15,
+                               Name = "HS1 S Tarther Blast 1201A190 300",
+                               Description = "Asics Lite Overlab Neon is for active and on-the-go young people, made from a combination of two high-quality waterproof polyester and ballistic mesh fabrics. In addition, it comes with an outsole that uses advanced Lite - Tech technology to help reduce the weight of the shoes significantly. Vibrant neon colors along with brand details give the design a striking trendy look, with a trendy look and set apart from the crowd.",
+                               Size = 40,
+                               CategoryId = 6,
+                               DateCreated = DateTime.Now,
+                               OriginalPrice = 2350000
+                           },
+                            new Product
+                            {
+                                Id = 16,
+                                Name = "Adidas Originals Tokio Solar HM",
+                                Description = "The HUMAN MADE x adidas Originals Tokio Solar HM adds vibrant green color to a new silhouette brought to you by visionary creative and archivist NIGO. The collaborative adidas shoe draws inspiration from NIGO’s personal archive and adidas’s vintage sporting heritage. Taking design elements from the Tokio trainer that was developed for the 1964 Tokyo Olympics, the Tokio Solar HM is made of a Primeknit upper with suede panels and leather Three Stripes. An 'X' detail, made out of the same leather as the Three Stripes, appears on the mid panel and heel.",
+                                Size = 41,
+                                CategoryId = 2,
+                                DateCreated = DateTime.Now,
+                                OriginalPrice = 2200000
+                            },
+                             new Product
+                             {
+                                 Id = 17,
+                                 Name = "Superturf Adventure SW x A GW8810",
+                                 Description = "The Sean Wotherspoon x adidas Superstar “SuperEarth - Black” is the follow-up release of the debut collaboration between the vintage apparel and footwear curator and adidas. Wotherspoon and adidas’s first “SuperEarth” collaboration took place in August 2010 with this “Black” colorway releasing in October 2021. Consistent with the theme of all of Wotherspoon’s sneaker collaborations, the Superstar SuperEarth is an all-vegan shoe made from recycled materials. The upper features a multicolor embroidered floral motif across either side. Metallic Gold “SuperEarth” and “adidas” branding are printed on the left and right light blue leather heel tabs, respectively. The cream rubber shell toe brings a classic Superstar look onto this modern colorway. Mismatched leather eyelet panels combine with unique “SuperEarth” inspired branding on the left and right tongue tags to form a progressive look",
+                                 Size = 42,
+                                 CategoryId = 3,
+                                 DateCreated = DateTime.Now,
+                                 OriginalPrice = 2000000
+                             }
              );
+            modelBuilder.Entity<ProductImage>().HasData(
+                new ProductImage
+                {
+                    Id = 1,
+                    ProductId = 1,
+                    FileName = "1.1.jpg",
+                    Caption = "Cake Image",
+                    DateCreated = DateTime.Now,
+                },
+                 new ProductImage
+                 {
+                     Id = 2,
+                     ProductId = 1,
+                     FileName = "1.2.jpg",
+                     Caption = "Cake Image",
+                     DateCreated = DateTime.Now,
+                 },
+                  new ProductImage
+                  {
+                      Id = 3,
+                      ProductId = 1,
+                      FileName = "1.3.jpg",
+                      Caption = "Cake Image",
+                      DateCreated = DateTime.Now,
+                  },
+                   new ProductImage
+                   {
+                       Id = 4,
+                       ProductId = 1,
+                       FileName = "1.4.jpg",
+                       Caption = "Cake Image",
+                       DateCreated = DateTime.Now,
+                   },
+                    new ProductImage
+                    {
+                        Id = 5,
+                        ProductId = 2,
+                        FileName = "2.1.jpg",
+                        Caption = "Cake Image",
+                        DateCreated = DateTime.Now,
+                    }, new ProductImage
+                    {
+                        Id = 6,
+                        ProductId = 2,
+                        FileName = "2.2.jpg",
+                        Caption = "Cake Image",
+                        DateCreated = DateTime.Now,
+                    }, new ProductImage
+                    {
+                        Id = 7,
+                        ProductId = 2,
+                        FileName = "2.3.jpg",
+                        Caption = "Cake Image",
+                        DateCreated = DateTime.Now,
+                    }, new ProductImage
+                    {
+                        Id = 8,
+                        ProductId = 2,
+                        FileName = "2.4.jpg",
+                        Caption = "Cake Image",
+                        DateCreated = DateTime.Now,
+                    }, new ProductImage
+                    {
+                        Id = 9,
+                        ProductId = 3,
+                        FileName = "3.1.jpg",
+                        Caption = "Cake Image",
+                        DateCreated = DateTime.Now,
+                    }, new ProductImage
+                    {
+                        Id = 10,
+                        ProductId = 3,
+                        FileName = "3.2.jpg",
+                        Caption = "Cake Image",
+                        DateCreated = DateTime.Now,
+                    }, new ProductImage
+                    {
+                        Id = 11,
+                        ProductId = 3,
+                        FileName = "3.3.jpg",
+                        Caption = "Cake Image",
+                        DateCreated = DateTime.Now,
+                    }, new ProductImage
+                    {
+                        Id = 12,
+                        ProductId = 3,
+                        FileName = "3.4.jpg",
+                        Caption = "Cake Image",
+                        DateCreated = DateTime.Now,
+                    }, new ProductImage
+                    {
+                        Id = 13,
+                        ProductId = 4,
+                        FileName = "4.1.jpg",
+                        Caption = "Cake Image",
+                        DateCreated = DateTime.Now,
+                    }, new ProductImage
+                    {
+                        Id = 14,
+                        ProductId = 4,
+                        FileName = "4.2.jpg",
+                        Caption = "Cake Image",
+                        DateCreated = DateTime.Now,
+                    }, new ProductImage
+                    {
+                        Id = 15,
+                        ProductId = 4,
+                        FileName = "4.3.jpg",
+                        Caption = "Cake Image",
+                        DateCreated = DateTime.Now,
+                    }, new ProductImage
+                    {
+                        Id = 16,
+                        ProductId = 4,
+                        FileName = "4.4.jpg",
+                        Caption = "Cake Image",
+                        DateCreated = DateTime.Now,
+                    }, new ProductImage
+                    {
+                        Id = 17,
+                        ProductId = 5,
+                        FileName = "5.1.jpg",
+                        Caption = "Cake Image",
+                        DateCreated = DateTime.Now,
+                    }, new ProductImage
+                    {
+                        Id = 18,
+                        ProductId = 5,
+                        FileName = "5.2.jpg",
+                        Caption = "Cake Image",
+                        DateCreated = DateTime.Now,
+                    }, new ProductImage
+                    {
+                        Id = 19,
+                        ProductId = 5,
+                        FileName = "5.3.jpg",
+                        Caption = "Cake Image",
+                        DateCreated = DateTime.Now,
+                    }, new ProductImage
+                    {
+                        Id = 20,
+                        ProductId = 5,
+                        FileName = "5.4.jpg",
+                        Caption = "Cake Image",
+                        DateCreated = DateTime.Now,
+                    }, new ProductImage
+                    {
+                        Id = 21,
+                        ProductId = 6,
+                        FileName = "6.1.jpg",
+                        Caption = "Cake Image",
+                        DateCreated = DateTime.Now,
+                    }, new ProductImage
+                    {
+                        Id = 22,
+                        ProductId = 6,
+                        FileName = "6.2.jpg",
+                        Caption = "Cake Image",
+                        DateCreated = DateTime.Now,
+                    }, new ProductImage
+                    {
+                        Id = 23,
+                        ProductId = 6,
+                        FileName = "6.3.jpg",
+                        Caption = "Cake Image",
+                        DateCreated = DateTime.Now,
+                    }, new ProductImage
+                    {
+                        Id = 24,
+                        ProductId = 6,
+                        FileName = "6.4.jpg",
+                        Caption = "Cake Image",
+                        DateCreated = DateTime.Now,
+                    }, new ProductImage
+                    {
+                        Id = 25,
+                        ProductId = 7,
+                        FileName = "7.1.jpg",
+                        Caption = "Cake Image",
+                        DateCreated = DateTime.Now,
+                    }, new ProductImage
+                    {
+                        Id = 26,
+                        ProductId = 7,
+                        FileName = "7.2.jpg",
+                        Caption = "Cake Image",
+                        DateCreated = DateTime.Now,
+                    }, new ProductImage
+                    {
+                        Id = 27,
+                        ProductId = 7,
+                        FileName = "7.3.jpg",
+                        Caption = "Cake Image",
+                        DateCreated = DateTime.Now,
+                    }, new ProductImage
+                    {
+                        Id = 28,
+                        ProductId = 7,
+                        FileName = "7.4.jpg",
+                        Caption = "Cake Image",
+                        DateCreated = DateTime.Now,
+                    }, new ProductImage
+                    {
+                        Id = 29,
+                        ProductId = 8,
+                        FileName = "8.1.jpg",
+                        Caption = "Cake Image",
+                        DateCreated = DateTime.Now,
+                    }, new ProductImage
+                    {
+                        Id = 30,
+                        ProductId = 8,
+                        FileName = "8.2.jpg",
+                        Caption = "Cake Image",
+                        DateCreated = DateTime.Now,
+                    }, new ProductImage
+                    {
+                        Id = 31,
+                        ProductId = 8,
+                        FileName = "8.3.jpg",
+                        Caption = "Cake Image",
+                        DateCreated = DateTime.Now,
+                    }, new ProductImage
+                    {
+                        Id = 32,
+                        ProductId = 8,
+                        FileName = "8.4.jpg",
+                        Caption = "Cake Image",
+                        DateCreated = DateTime.Now,
+                    }, new ProductImage
+                    {
+                        Id = 33,
+                        ProductId = 9,
+                        FileName = "9.1.jpg",
+                        Caption = "Cake Image",
+                        DateCreated = DateTime.Now,
+                    }, new ProductImage
+                    {
+                        Id = 34,
+                        ProductId = 9,
+                        FileName = "9.2.jpg",
+                        Caption = "Cake Image",
+                        DateCreated = DateTime.Now,
+                    }, new ProductImage
+                    {
+                        Id = 35,
+                        ProductId = 9,
+                        FileName = "9.3.jpg",
+                        Caption = "Cake Image",
+                        DateCreated = DateTime.Now,
+                    }, new ProductImage
+                    {
+                        Id = 36,
+                        ProductId = 9,
+                        FileName = "9.4.jpg",
+                        Caption = "Cake Image",
+                        DateCreated = DateTime.Now,
+                    }, new ProductImage
+                    {
+                        Id = 37,
+                        ProductId = 10,
+                        FileName = "10.1.jpg",
+                        Caption = "Cake Image",
+                        DateCreated = DateTime.Now,
+                    }, new ProductImage
+                    {
+                        Id = 38,
+                        ProductId = 10,
+                        FileName = "10.2.jpg",
+                        Caption = "Cake Image",
+                        DateCreated = DateTime.Now,
+                    }, new ProductImage
+                    {
+                        Id = 39,
+                        ProductId = 10,
+                        FileName = "10.3.jpg",
+                        Caption = "Cake Image",
+                        DateCreated = DateTime.Now,
+                    }, new ProductImage
+                    {
+                        Id = 40,
+                        ProductId = 10,
+                        FileName = "10.4.jpg",
+                        Caption = "Cake Image",
+                        DateCreated = DateTime.Now,
+                    }, new ProductImage
+                    {
+                        Id = 41,
+                        ProductId = 11,
+                        FileName = "11.1.jpg",
+                        Caption = "Cake Image",
+                        DateCreated = DateTime.Now,
+                    }, new ProductImage
+                    {
+                        Id = 42,
+                        ProductId = 11,
+                        FileName = "11.2.jpg",
+                        Caption = "Cake Image",
+                        DateCreated = DateTime.Now,
+                    }, new ProductImage
+                    {
+                        Id = 43,
+                        ProductId = 11,
+                        FileName = "11.3.jpg",
+                        Caption = "Cake Image",
+                        DateCreated = DateTime.Now,
+                    }, new ProductImage
+                    {
+                        Id = 44,
+                        ProductId = 11,
+                        FileName = "11.4.jpg",
+                        Caption = "Cake Image",
+                        DateCreated = DateTime.Now,
+                    }, new ProductImage
+                    {
+                        Id = 45,
+                        ProductId = 12,
+                        FileName = "12.1.jpg",
+                        Caption = "Cake Image",
+                        DateCreated = DateTime.Now,
+                    }, new ProductImage
+                    {
+                        Id = 46,
+                        ProductId = 12,
+                        FileName = "12.2.jpg",
+                        Caption = "Cake Image",
+                        DateCreated = DateTime.Now,
+                    }, new ProductImage
+                    {
+                        Id = 47,
+                        ProductId = 12,
+                        FileName = "12.3.jpg",
+                        Caption = "Cake Image",
+                        DateCreated = DateTime.Now,
+                    }, new ProductImage
+                    {
+                        Id = 48,
+                        ProductId = 12,
+                        FileName = "12.4.jpg",
+                        Caption = "Cake Image",
+                        DateCreated = DateTime.Now,
+                    }, new ProductImage
+                    {
+                        Id = 49,
+                        ProductId = 13,
+                        FileName = "13.1.jpg",
+                        Caption = "Cake Image",
+                        DateCreated = DateTime.Now,
+                    }, new ProductImage
+                    {
+                        Id = 50,
+                        ProductId = 13,
+                        FileName = "13.2.jpg",
+                        Caption = "Cake Image",
+                        DateCreated = DateTime.Now,
+                    }, new ProductImage
+                    {
+                        Id = 51,
+                        ProductId = 13,
+                        FileName = "13.3.jpg",
+                        Caption = "Cake Image",
+                        DateCreated = DateTime.Now,
+                    }, new ProductImage
+                    {
+                        Id = 52,
+                        ProductId = 13,
+                        FileName = "13.4.jpg",
+                        Caption = "Cake Image",
+                        DateCreated = DateTime.Now,
+                    }, new ProductImage
+                    {
+                        Id = 53,
+                        ProductId = 14,
+                        FileName = "14.1.jpg",
+                        Caption = "Cake Image",
+                        DateCreated = DateTime.Now,
+                    }, new ProductImage
+                    {
+                        Id = 54,
+                        ProductId = 14,
+                        FileName = "14.2.jpg",
+                        Caption = "Cake Image",
+                        DateCreated = DateTime.Now,
+                    }, new ProductImage
+                    {
+                        Id = 55,
+                        ProductId = 14,
+                        FileName = "14.3.jpg",
+                        Caption = "Cake Image",
+                        DateCreated = DateTime.Now,
+                    }, new ProductImage
+                    {
+                        Id = 56,
+                        ProductId = 14,
+                        FileName = "14.4.jpg",
+                        Caption = "Cake Image",
+                        DateCreated = DateTime.Now,
+                    }, new ProductImage
+                    {
+                        Id = 57,
+                        ProductId = 15,
+                        FileName = "15.1.jpg",
+                        Caption = "Cake Image",
+                        DateCreated = DateTime.Now,
+                    }, new ProductImage
+                    {
+                        Id = 58,
+                        ProductId = 15,
+                        FileName = "15.2.jpg",
+                        Caption = "Cake Image",
+                        DateCreated = DateTime.Now,
+                    },
+                    new ProductImage
+                    {
+                        Id = 59,
+                        ProductId = 15,
+                        FileName = "15.3.jpg",
+                        Caption = "Cake Image",
+                        DateCreated = DateTime.Now,
+                    },
+                    new ProductImage
+                    {
+                        Id = 60,
+                        ProductId = 15,
+                        FileName = "15.4.jpg",
+                        Caption = "Cake Image",
+                        DateCreated = DateTime.Now,
+                    }, new ProductImage
+                    {
+                        Id = 61,
+                        ProductId = 16,
+                        FileName = "16.1.jpg",
+                        Caption = "Cake Image",
+                        DateCreated = DateTime.Now,
+                    }, new ProductImage
+                    {
+                        Id = 62,
+                        ProductId = 16,
+                        FileName = "16.2.jpg",
+                        Caption = "Cake Image",
+                        DateCreated = DateTime.Now,
+                    }, new ProductImage
+                    {
+                        Id = 63,
+                        ProductId = 16,
+                        FileName = "16.3.jpg",
+                        Caption = "Cake Image",
+                        DateCreated = DateTime.Now,
+                    }, new ProductImage
+                    {
+                        Id = 64,
+                        ProductId = 16,
+                        FileName = "16.4.jpg",
+                        Caption = "Cake Image",
+                        DateCreated = DateTime.Now,
+                    }, new ProductImage
+                    {
+                        Id = 65,
+                        ProductId = 17,
+                        FileName = "17.1.jpg",
+                        Caption = "Cake Image",
+                        DateCreated = DateTime.Now,
+                    }, new ProductImage
+                    {
+                        Id = 66,
+                        ProductId = 17,
+                        FileName = "17.2.jpg",
+                        Caption = "Cake Image",
+                        DateCreated = DateTime.Now,
+                    }, new ProductImage
+                    {
+                        Id = 67,
+                        ProductId = 17,
+                        FileName = "17.3.jpg",
+                        Caption = "Cake Image",
+                        DateCreated = DateTime.Now,
+                    },
+                    new ProductImage
+                    {
+                        Id = 68,
+                        ProductId = 17,
+                        FileName = "17.4.jpg",
+                        Caption = "Cake Image",
+                        DateCreated = DateTime.Now,
+                    }
+             );
+            //create guids for user and admin
+            var adminRoleId = new Guid("9E87B492-5343-4272-9A34-FA5DE7CFFB22");
+            var userRoleId = new Guid("8F7579EE-4AF9-4B71-9ADA-7F792F76DC31");
+            var adminId = new Guid("372EA575-2536-4076-9BAB-3E3138DE495F");
+            var userId = new Guid("8A820ADB-93D7-4C6F-9404-BDBFC14419F4");
+            var userId2 = new Guid("51B4B238-4AE0-4E46-A3F4-E0ACF7666B15");
+            modelBuilder.Entity<AppRole>().HasData(
+                new AppRole
+                {
+                    Id = adminRoleId,
+                    Name = "admin",
+                    NormalizedName = "admin",
+                    Description = "Administrator role"
+                },
+                  new AppRole
+                  {
+                      Id = userRoleId,
+                      Name = "customer",
+                      NormalizedName = "customer",
+                      Description = "Customer role"
+                  }
+            );
 
+            var hasher = new PasswordHasher<AppUser>();
+            modelBuilder.Entity<AppUser>().HasData(
+                new AppUser
+                {
+                    Id = adminId,
+                    UserName = "admin",
+                    NormalizedUserName = "admin",
+                    Email = "huy@gmail.com",
+                    NormalizedEmail = "huy@gmail.com",
+                    EmailConfirmed = true,
+                    PasswordHash = hasher.HashPassword(null, "Abcd1234!"),
+                    SecurityStamp = string.Empty,
+                    Name = "Lam Nhut Huy",
+                    DoB = new DateTime(2000, 07, 23),
+                    Address = "Can Tho"
+                },
+                new AppUser
+                {
+                    Id = userId,
+                    UserName = "nguyenvanhoang",
+                    NormalizedUserName = "user",
+                    Email = "hoang@gmail.com",
+                    NormalizedEmail = "hoang@gmail.com",
+                    EmailConfirmed = true,
+                    PasswordHash = hasher.HashPassword(null, "Abcd1234!"),
+                    SecurityStamp = string.Empty,
+                    Name = "Nguyen Van Hoang",
+                    DoB = new DateTime(1999, 09, 13),
+                    Address = "131, phường Cầu Kho, quận 1, TP.HCM"
+                },
+                new AppUser
+                {
+                    Id = userId2,
+                    UserName = "myduyentran",
+                    NormalizedUserName = "user",
+                    Email = "duyen@gmail.com",
+                    NormalizedEmail = "duyen@gmail.com",
+                    EmailConfirmed = true,
+                    PasswordHash = hasher.HashPassword(null, "Abcd1234!"),
+                    SecurityStamp = string.Empty,
+                    Name = "Tran Thi My Duyen",
+                    DoB = new DateTime(2001, 03, 17),
+                    Address = "Kiên Giang"
+                }
+            );
+            modelBuilder.Entity<IdentityUserRole<Guid>>().HasData(
+              new IdentityUserRole<Guid>
+              {
+                  RoleId = adminRoleId,
+                  UserId = adminId,
+              },
+              new IdentityUserRole<Guid>
+              {
+                  RoleId = userRoleId,
+                  UserId = userId,
+              },
+              new IdentityUserRole<Guid>
+              {
+                  RoleId = userRoleId,
+                  UserId = userId2,
+              });
+            modelBuilder.Entity<Order>().HasData(
+                new Order
+                {
+                    Id = 1,
+                    UserId = new Guid("8A820ADB-93D7-4C6F-9404-BDBFC14419F4"),
+                    DateCreated = new DateTime(2022, 1, 27, 9, 30, 0),
+                    DeliveryDate = new DateTime(2022, 1, 30, 9, 30, 0),
+                    Status = Enums.Status.Pending,
+                    Total = 2200000
+
+                },
+                 new Order
+                 {
+                     Id = 2,
+                     UserId = new Guid("8A820ADB-93D7-4C6F-9404-BDBFC14419F4"),
+                     DateCreated = new DateTime(2022, 2, 2, 10, 25, 0),
+                     DeliveryDate = new DateTime(2022, 2, 5, 10, 25, 0),
+                     Status = Enums.Status.Shipping,
+                     Total = 5000000
+                 },
+                  new Order
+                  {
+                      Id = 3,
+                      UserId = new Guid("51B4B238-4AE0-4E46-A3F4-E0ACF7666B15"),
+                      DateCreated = new DateTime(2022, 1, 28, 15, 30, 0),
+                      DeliveryDate = new DateTime(2022, 2, 1, 15, 30, 0),
+                      Status = Enums.Status.Completed,
+                      Total = 1600000
+
+                  },
+                    new Order
+                    {
+                        Id = 4,
+                        UserId = new Guid("51B4B238-4AE0-4E46-A3F4-E0ACF7666B15"),
+                        DateCreated = new DateTime(2022, 2, 3, 7, 0, 0),
+                        DeliveryDate = new DateTime(2022, 2, 6, 7, 0, 0),
+                        Status = Enums.Status.Confirmed,
+                        Total = 1700000
+                    }
+             );
+            modelBuilder.Entity<OrderDetail>().HasData(
+                new OrderDetail
+                {
+                    OrderId = 1,
+                    ProductId = 16,
+                    Amount = 1
+                },
+                 new OrderDetail
+                 {
+                     OrderId = 2,
+                     ProductId = 1,
+                     Amount = 1
+                 },
+                 new OrderDetail
+                 {
+                     OrderId = 3,
+                     ProductId = 12,
+                     Amount = 1
+                 },
+                 new OrderDetail
+                 {
+                     OrderId = 2,
+                     ProductId = 5,
+                     Amount = 1
+                 },
+                 new OrderDetail
+                 {
+                     OrderId = 4,
+                     ProductId = 8,
+                     Amount = 1
+                 }
+            );
+            modelBuilder.Entity<Comment>().HasData(
+                new Comment
+                {
+                    Id = 1,
+                    ProductId = 1,
+                    UserId = new Guid("8A820ADB-93D7-4C6F-9404-BDBFC14419F4"),
+                    content = "Giày đẹp",
+                    DateCreated = DateTime.Now,
+
+                },
+                 new Comment
+                 {
+                     Id = 2,
+                     ProductId = 2,
+                     UserId = new Guid("8A820ADB-93D7-4C6F-9404-BDBFC14419F4"),
+                     content = "Giày mang hơi rộng.",
+                     DateCreated = DateTime.Now,
+
+                 },
+                  new Comment
+                  {
+                      Id = 3,
+                      ProductId = 1,
+                      UserId = new Guid("51B4B238-4AE0-4E46-A3F4-E0ACF7666B15"),
+                      content = "Giày mang êm",
+                      DateCreated = DateTime.Now,
+
+                  },
+                 new Comment
+                 {
+                     Id = 4,
+                     ProductId = 2,
+                     UserId = new Guid("51B4B238-4AE0-4E46-A3F4-E0ACF7666B15"),
+                     content = "Giao hàng hơi chậm",
+                     DateCreated = DateTime.Now,
+
+                 }
+             );
         }
     }
 }
