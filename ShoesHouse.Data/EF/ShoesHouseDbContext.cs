@@ -34,6 +34,8 @@ namespace ShoesHouse.Data.EF
             modelBuilder.Entity<IdentityRoleClaim<Guid>>().ToTable("AppRoleClaims");
             modelBuilder.Entity<IdentityUserToken<Guid>>().ToTable("AppUserTokens").HasKey(x => x.UserId);
 
+            //seed data
+            modelBuilder.Seed();
 
         }
         public DbSet<Category> Categories { get; set; }
