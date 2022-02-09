@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace ShoesHouse.Data.Configurations
 {
-    class AppUserConfiguration : IEntityTypeConfiguration<AppUser>
+    public class AppUserConfiguration : IEntityTypeConfiguration<AppUser>
     {
         public void Configure(EntityTypeBuilder<AppUser> builder)
         {

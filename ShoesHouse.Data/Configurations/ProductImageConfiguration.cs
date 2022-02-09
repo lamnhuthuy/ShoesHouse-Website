@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace ShoesHouse.Data.Configurations
 {
-    class ProductImageConfiguration : IEntityTypeConfiguration<ProductImage>
+    public class ProductImageConfiguration : IEntityTypeConfiguration<ProductImage>
     {
         public void Configure(EntityTypeBuilder<ProductImage> builder)
         {

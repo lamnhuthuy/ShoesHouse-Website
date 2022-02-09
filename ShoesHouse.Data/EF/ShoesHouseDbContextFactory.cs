@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace ShoesHouse.Data.EF
 {
-    class ShoesHouseDbContextFactory : IDesignTimeDbContextFactory<ShoesHouseDbContext>
+    public class ShoesHouseDbContextFactory : IDesignTimeDbContextFactory<ShoesHouseDbContext>
     {
         public ShoesHouseDbContext CreateDbContext(string[] args)
         {

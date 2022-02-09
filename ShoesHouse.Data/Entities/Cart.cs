@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ShoesHouse.Data.Entities
 {
-    class Cart
+    public class Cart
     {
         public Guid UserId { get; set; }
         public AppUser User { get; set; }

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace ShoesHouse.Data.Configurations
 {
-    class CartConfiguration : IEntityTypeConfiguration<Cart>
+    public class CartConfiguration : IEntityTypeConfiguration<Cart>
     {
         public void Configure(EntityTypeBuilder<Cart> builder)
         {

@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace ShoesHouse.Data.EF
 {
-    class ShoesHouseDbContext : IdentityDbContext<AppUser, AppRole, Guid>
+    public class ShoesHouseDbContext : IdentityDbContext<AppUser, AppRole, Guid>
     {
         public ShoesHouseDbContext(DbContextOptions options) : base(options)
         {

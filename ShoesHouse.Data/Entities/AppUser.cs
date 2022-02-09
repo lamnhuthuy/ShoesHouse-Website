@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ShoesHouse.Data.Entities
 {
-    class AppUser : IdentityUser<Guid>
+    public class AppUser : IdentityUser<Guid>
     {
         public string Name { get; set; }
         public string Address { get; set; }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ShoesHouse.Data.Entities
 {
-    class Comment
+    public class Comment
     {
         public int Id { get; set; }
         public int ProductId { get; set; }
