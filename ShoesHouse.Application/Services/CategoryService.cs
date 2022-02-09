@@ -1,4 +1,6 @@
 ﻿using ShoesHouse.Application.Interfaces;
+using ShoesHouse.Data.EF;
+using ShoesHouse.Data.Entities;
 using ShoesHouse.ViewModels.Requests.Category;
 using ShoesHouse.ViewModels.Requests.Product;
 using System;
@@ -11,14 +13,27 @@ namespace ShoesHouse.Application.Services
 {
     class CategoryService : ICategoryService
     {
-        public Task<int> CreateAsync(ProductCreateRequest request)
+        private readonly ShoesHouseDbContext _context;
+        public CategoryService(ShoesHouseDbContext context)
         {
-            throw new NotImplementedException();
+            _context = context;
         }
 
-        public Task<int> CreateAsync(CategoryCreateRequest request)
+        public async Task<int> CreateAsync(CategoryCreateRequest request)
         {
-            throw new NotImplementedException();
+            if (string.IsNullOrEmpty(request.Name))
+            {
+                return 0;
+            }
+            var category = new Category()
+            {
+                Name = request.Name,
+                Description = request.Description
+            };
+            await _context.Categories.AddAsync(category);
+            await _context.SaveChangesAsync();
+            return category.Id;
+
         }
 
         public Task<int> DeleteAsync(int ProductId)
@@ -26,10 +41,6 @@ namespace ShoesHouse.Application.Services
             throw new NotImplementedException();
         }
 
-        public Task<int> UpdateAsync(ProductUpdateRequest request)
-        {
-            throw new NotImplementedException();
-        }
 
         public Task<int> UpdateAsync(CategoryUpdateRequest request)
         {
