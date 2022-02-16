@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ShoesHouse.ViewModels.ViewModels;
 
 namespace ShoesHouse.Application.Interfaces
 {
@@ -15,6 +16,6 @@ namespace ShoesHouse.Application.Interfaces
 
         Task<int> DeleteAsync(int categoryId);
 
-
+        Task<List<CategoryViewModel>> GetAllAsync();
     }
 }
