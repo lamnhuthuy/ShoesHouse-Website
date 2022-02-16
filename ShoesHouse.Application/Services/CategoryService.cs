@@ -1,8 +1,10 @@
-﻿using ShoesHouse.Application.Interfaces;
+﻿using Microsoft.EntityFrameworkCore;
+using ShoesHouse.Application.Interfaces;
 using ShoesHouse.Data.EF;
 using ShoesHouse.Data.Entities;
 using ShoesHouse.ViewModels.Requests.Category;
 using ShoesHouse.ViewModels.Requests.Product;
+using ShoesHouse.ViewModels.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace ShoesHouse.Application.Services
 {
-    class CategoryService : ICategoryService
+    public class CategoryService : ICategoryService
     {
         private readonly ShoesHouseDbContext _context;
         public CategoryService(ShoesHouseDbContext context)
@@ -41,6 +43,16 @@ namespace ShoesHouse.Application.Services
             throw new NotImplementedException();
         }
 
+        public async Task<List<CategoryViewModel>> GetAllAsync()
+        {
+            return await _context.Categories.Select(category => new CategoryViewModel()
+            {
+                Id = category.Id,
+                Name = category.Name,
+                Description = category.Description
+            }).ToListAsync();
+
+        }
 
         public Task<int> UpdateAsync(CategoryUpdateRequest request)
         {
