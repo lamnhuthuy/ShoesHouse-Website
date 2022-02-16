@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ShoesHouse.Application.Services
 {
-    class ProductService : IProductService
+    public class ProductService : IProductService
     {
 
 
