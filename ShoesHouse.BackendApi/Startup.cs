@@ -6,6 +6,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using ShoesHouse.Application.Interfaces;
+using ShoesHouse.Application.Services;
 using ShoesHouse.Data.EF;
 using ShoesHouse.Utilities.Constants;
 using System;
@@ -34,6 +36,8 @@ namespace ShoesHouse.BackendApi
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Swagger Shoes House", Version = "v1" });
             });
+            //Declare DI
+            services.AddTransient<ICategoryService, CategoryService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
