@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using ShoesHouse.Application.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,10 +12,17 @@ namespace ShoesHouse.BackendApi.Controllers
     [ApiController]
     public class CategoriesController : ControllerBase
     {
+        public readonly ICategoryService _categoryService;
+
+        public CategoriesController(ICategoryService categoryService)
+        {
+            _categoryService = categoryService;
+        }
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            return Ok("test ok");
+            var Categories = await _categoryService.GetAllAsync();
+            return Ok(Categories);
         }
     }
 }
