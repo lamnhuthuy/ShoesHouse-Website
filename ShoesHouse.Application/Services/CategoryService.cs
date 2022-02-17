@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ShoesHouse.Utilities.Exceptions;
 
 namespace ShoesHouse.Application.Services
 {
@@ -51,6 +52,23 @@ namespace ShoesHouse.Application.Services
                 Name = category.Name,
                 Description = category.Description
             }).ToListAsync();
+
+        }
+
+        public async Task<CategoryViewModel> GetByIdAsync(int categoryId)
+        {
+            var category = await _context.Categories.Where(x => x.Id == categoryId).FirstOrDefaultAsync();
+            if (category == null)
+            {
+                throw new ShoesHouseException($"Cannot find category with Id = {categoryId}");
+            }
+            return new CategoryViewModel()
+            {
+                Id = category.Id,
+                Name = category.Name,
+                Description = category.Description
+            };
+
 
         }
 
