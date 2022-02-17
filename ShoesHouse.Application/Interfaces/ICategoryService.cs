@@ -17,5 +17,6 @@ namespace ShoesHouse.Application.Interfaces
         Task<int> DeleteAsync(int categoryId);
 
         Task<List<CategoryViewModel>> GetAllAsync();
+        Task<CategoryViewModel> GetByIdAsync(int categoryId);
     }
 }
