@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ShoesHouse.Application.Interfaces;
+using ShoesHouse.ViewModels.Requests.Category;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,6 +24,25 @@ namespace ShoesHouse.BackendApi.Controllers
         {
             var Categories = await _categoryService.GetAllAsync();
             return Ok(Categories);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Create([FromBody] CategoryCreateRequest request)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var categoryId = await _categoryService.CreateAsync(request);
+            if (categoryId == 0)
+            {
+                return BadRequest();
+            }
+            var data = await _categoryService.GetByIdAsync(categoryId);
+            if (data == null)
+            {
+                return NotFound($"Cannot find a cake with Id: {categoryId}");
+            }
+            return Ok(data);
         }
     }
 }
