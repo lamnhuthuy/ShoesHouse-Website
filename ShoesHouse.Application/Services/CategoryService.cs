@@ -39,9 +39,16 @@ namespace ShoesHouse.Application.Services
 
         }
 
-        public Task<int> DeleteAsync(int ProductId)
+        public async Task<int> DeleteAsync(int categoryId)
         {
-            throw new NotImplementedException();
+            var category = await _context.Categories.Where(x => x.Id == categoryId).FirstOrDefaultAsync();
+            if (category == null)
+            {
+                throw new ShoesHouseException($"Cannot find category with Id = {categoryId}");
+            }
+            _context.Categories.Remove(category);
+
+            return await _context.SaveChangesAsync();
         }
 
         public async Task<List<CategoryViewModel>> GetAllAsync()
@@ -72,9 +79,18 @@ namespace ShoesHouse.Application.Services
 
         }
 
-        public Task<int> UpdateAsync(CategoryUpdateRequest request)
+        public async Task<int> UpdateAsync(CategoryUpdateRequest request)
         {
-            throw new NotImplementedException();
+            var category = await _context.Categories.FindAsync(request.Id);
+            if (category == null)
+            {
+                throw new ShoesHouseException($"Cannot find category with Id = {request.Id}");
+            }
+            category.Name = request.Name;
+            category.Description = request.Description;
+
+            return await _context.SaveChangesAsync();
+
         }
     }
 }
