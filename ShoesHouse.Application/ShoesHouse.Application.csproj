@@ -5,7 +5,11 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<Folder Include="System\" />
+		<Folder Include="System\Roles\" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
 	</ItemGroup>
 
 	<ItemGroup>
