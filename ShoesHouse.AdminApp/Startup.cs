@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using ShoesHouse.ApiIntegration.InterfacesClient;
+using ShoesHouse.ApiIntegration.ServicesClient;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,7 +25,16 @@ namespace ShoesHouse.AdminApp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddHttpClient();
             services.AddControllersWithViews();
+            IMvcBuilder builder = services.AddRazorPages();
+            var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+            if (env == Environments.Development)
+            {
+                builder.AddRazorRuntimeCompilation();
+            }
+            //declare DI
+            services.AddTransient<IUserApiClient, UserApiClient>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

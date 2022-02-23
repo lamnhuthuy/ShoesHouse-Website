@@ -15,7 +15,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShoesHouse.BackendApi", "Sh
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShoesHouse.Utilities", "ShoesHouse.Utilities\ShoesHouse.Utilities.csproj", "{E76BC906-3963-40A7-BC70-5ED878EFF2BF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShoesHouse.AdminApp", "ShoesHouse.AdminApp\ShoesHouse.AdminApp.csproj", "{86E5B722-5F88-47EE-A817-A11F3F25F4F9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShoesHouse.AdminApp", "ShoesHouse.AdminApp\ShoesHouse.AdminApp.csproj", "{86E5B722-5F88-47EE-A817-A11F3F25F4F9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShoesHouse.ApiIntegration", "ShoesHouse.ApiIntegration\ShoesHouse.ApiIntegration.csproj", "{A8AED142-0DA6-4F00-8285-A39FC0913DA3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +53,10 @@ Global
 		{86E5B722-5F88-47EE-A817-A11F3F25F4F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{86E5B722-5F88-47EE-A817-A11F3F25F4F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{86E5B722-5F88-47EE-A817-A11F3F25F4F9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A8AED142-0DA6-4F00-8285-A39FC0913DA3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A8AED142-0DA6-4F00-8285-A39FC0913DA3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A8AED142-0DA6-4F00-8285-A39FC0913DA3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A8AED142-0DA6-4F00-8285-A39FC0913DA3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
