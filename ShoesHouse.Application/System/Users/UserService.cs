@@ -1,5 +1,4 @@
-﻿
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using ShoesHouse.Data.EF;
@@ -37,7 +36,7 @@ namespace ShoesHouse.Application.System.Users
             var user = await _userManager.FindByNameAsync(request.UserName);
             if (user == null) return new ApiErrorResult<string>("Tài khoản không tồn tại");
 
-            var result = await _signInManager.PasswordSignInAsync(user, request.Password, request.RememberMe, true);
+            var result = await _signInManager.PasswordSignInAsync(user.UserName, request.Password, request.RememberMe, true);
             if (!result.Succeeded)
             {
                 return new ApiErrorResult<string>("Đăng nhập không đúng");
