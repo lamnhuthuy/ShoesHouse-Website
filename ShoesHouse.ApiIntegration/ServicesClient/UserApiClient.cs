@@ -30,7 +30,7 @@ namespace ShoesHouse.ApiIntegration.ServicesClient
             var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
 
             var client = _httpClientFactory.CreateClient();
-            client.BaseAddress = new Uri(SystemConstants.MAIN_BASE_ADDRESS);
+            client.BaseAddress = new Uri(_config["BaseAddress"]);
             var response = await client.PostAsync("/api/Users/authenticate", httpContent);
 
             var token = await response.Content.ReadAsStringAsync();
