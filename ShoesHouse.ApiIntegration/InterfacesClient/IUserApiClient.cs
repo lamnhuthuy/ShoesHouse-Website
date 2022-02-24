@@ -10,6 +10,6 @@ namespace ShoesHouse.ApiIntegration.InterfacesClient
 {
     public interface IUserApiClient
     {
-        Task<string> Authenticate(LoginRequest request);
+        Task<ApiResult<string>> Authenticate(LoginRequest request);
     }
 }

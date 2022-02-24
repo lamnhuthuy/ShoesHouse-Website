@@ -24,7 +24,7 @@ namespace ShoesHouse.ApiIntegration.ServicesClient
             _config = config;
         }
 
-        public async Task<string> Authenticate(LoginRequest request)
+        public async Task<ApiResult<string>> Authenticate(LoginRequest request)
         {
             var json = JsonConvert.SerializeObject(request);
             var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
@@ -32,10 +32,12 @@ namespace ShoesHouse.ApiIntegration.ServicesClient
             var client = _httpClientFactory.CreateClient();
             client.BaseAddress = new Uri(_config["BaseAddress"]);
             var response = await client.PostAsync("/api/Users/authenticate", httpContent);
+            if (response.IsSuccessStatusCode)
+            {
+                return JsonConvert.DeserializeObject<ApiSuccessResult<string>>(await response.Content.ReadAsStringAsync());
+            }
 
-            var token = await response.Content.ReadAsStringAsync();
-
-            return token;
+            return JsonConvert.DeserializeObject<ApiErrorResult<string>>(await response.Content.ReadAsStringAsync());
 
         }
     }
