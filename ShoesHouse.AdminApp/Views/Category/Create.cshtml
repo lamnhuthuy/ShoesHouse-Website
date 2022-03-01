@@ -1,0 +1,58 @@
+﻿@model CategoryCreateRequest
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Create</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a asp-action="Index" asp-controller="Category">Mange categories</a></li>
+                    <li class="breadcrumb-item active">Create category</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+<partial name="_Notification" />
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <!-- left column -->
+            <div class="col">
+                <!-- general form elements -->
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">Create a category item</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <!-- form start -->
+                    <form method="post" asp-action="Create" asp-controller="Category">
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label asp-for="Name"></label>
+                                <input type="text" class="form-control" asp-for="Name">
+                                <span class="text-danger" asp-validation-for="Name"></span>
+                            </div>
+                            <div class="form-group">
+                                <label for="description">Description</label>
+                                <textarea class="form-control" name="description" id="description" rows="7"></textarea>
+                                <span class="text-danger" asp-validation-for="Description"></span>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <div class="d-flex justify-content-between">
+                                <a asp-action="Index" asp-controller="Category" class=" btn btn-secondary">Cancel</a>
+                                <input type="submit" value="Save" class="btn btn-success">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+        </div>
+    </div>
+    <!-- /.row -->
+    </div><!-- /.container-fluid -->
+</section>

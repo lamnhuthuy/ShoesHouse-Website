@@ -1,0 +1,60 @@
+﻿@model CategoryUpdateRequest
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Update</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a asp-controller="Category" asp-action="Index">Mange categories</a></li>
+                    <li class="breadcrumb-item active">Update category</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+<partial name="_Notification" />
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <!-- left column -->
+            <div class="col">
+                <!-- general form elements -->
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">Update category item</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <!-- form start -->
+                    <form asp-action="Update" asp-controller="Category" method="post">
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label asp-for="Id"></label>
+                                <input required type="text" class="form-control" asp-for="Id" disabled>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Name"></label>
+                                <input required type="text" class="form-control" asp-for="Name">
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Description"></label>
+                                <textarea class="form-control" asp-for="Description" rows="7"></textarea>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <div class="d-flex justify-content-between">
+                                <a asp-action="Index" asp-controller="Category" class=" btn btn-secondary">Cancel</a>
+                                <input type="submit" value="Save" class="btn btn-success">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+        </div>
+    </div>
+    <!-- /.row -->
+    </div><!-- /.container-fluid -->
+</section>
