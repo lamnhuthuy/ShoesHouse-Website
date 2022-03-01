@@ -32,7 +32,7 @@ namespace ShoesHouse.BackendApi.Controllers
 
             if (string.IsNullOrEmpty(resultToken.ResultObj))
             {
-                return BadRequest(resultToken.Message);
+                return BadRequest(resultToken);
             }
             return Ok(resultToken);
         }

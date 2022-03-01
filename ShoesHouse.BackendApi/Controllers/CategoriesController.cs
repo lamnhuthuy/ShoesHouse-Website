@@ -22,12 +22,14 @@ namespace ShoesHouse.BackendApi.Controllers
             _categoryService = categoryService;
         }
         [HttpGet]
+        [AllowAnonymous]
         public async Task<IActionResult> Get()
         {
             var Categories = await _categoryService.GetAllAsync();
             return Ok(Categories);
         }
         [HttpGet("{categoryId}")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetById(int categoryId)
         {
             try
@@ -66,6 +68,7 @@ namespace ShoesHouse.BackendApi.Controllers
             return Ok(data);
         }
         [HttpDelete("{categoryId}")]
+        [Authorize]
         public async Task<IActionResult> Delete(int categoryId)
         {
             try
@@ -73,9 +76,8 @@ namespace ShoesHouse.BackendApi.Controllers
                 var result = await _categoryService.DeleteAsync(categoryId);
                 if (result == 0)
                 {
-                    return NotFound($"Cannot find a cake with Id: {categoryId}");
+                    return BadRequest(result);
                 }
-
                 return Ok(result);
             }
             catch (Exception e)

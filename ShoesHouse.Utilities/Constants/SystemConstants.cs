@@ -10,5 +10,9 @@ namespace ShoesHouse.Utilities.Constants
     {
         public const string MAIN_CONNECTION_STRING = "ShoesHouseDb";
         public const string MAIN_BASE_ADDRESS = "https://localhost:5001";
+        public class AppSettings
+        {
+            public const string Token = "Token";
+        }
     }
 }

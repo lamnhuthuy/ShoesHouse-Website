@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -31,8 +32,13 @@ namespace ShoesHouse.AdminApp
                 {
                     options.LoginPath = "/Login/Index";
                     options.AccessDeniedPath = "/User/Forbidden/";
-                });
 
+                });
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromHours(3);
+                options.Cookie.IsEssential = true;
+            });
             services.AddControllersWithViews();
             IMvcBuilder builder = services.AddRazorPages();
             var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
@@ -42,6 +48,13 @@ namespace ShoesHouse.AdminApp
             }
             //declare DI
             services.AddTransient<IUserApiClient, UserApiClient>();
+            services.AddTransient<ICategoryService, CategoryApiClient>();
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+        }
+
+        private object IHttpContextAccesstor(IServiceProvider arg)
+        {
+            throw new NotImplementedException();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -63,7 +76,7 @@ namespace ShoesHouse.AdminApp
             app.UseRouting();
 
             app.UseAuthorization();
-
+            app.UseSession();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
