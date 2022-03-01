@@ -1,0 +1,16 @@
+﻿@if (TempData["result"] != null)
+{
+    @if (string.Compare(TempData["result"].ToString(), "true", true) == 0)
+    {<div class="alert alert-success alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <div>@ViewBag.message</div>
+        </div>
+    }
+    else
+    { <div class="alert alert-warning alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <div>@ViewBag.message</div>
+        </div>
+    }
+
+}
