@@ -1,0 +1,90 @@
+﻿@model ProductUpdateRequest
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Create</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a asp-action="Index" asp-controller="Product">Mange product</a></li>
+                    <li class="breadcrumb-item active">Create product</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+<partial name="_Notification" />
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <!-- left column -->
+            <div class="col">
+                <!-- general form elements -->
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">Create a cake</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <!-- form start -->
+                    <form method="post" enctype="multipart/form-data" asp-action="Create" asp-controller="Product">
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label asp-for="CategoryId">Category type</label>
+                                <select class="form-control custom-select" required asp-for="CategoryId" asp-items="@ViewBag.MovieType">
+                                    <option disabled selected>Please select one</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Name"></label>
+                                <input required asp-for="Name" class="form-control" type="text">
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Price"></label>
+                                <input class="form-control" asp-for="Price">
+                                <span class="text-danger" asp-validation-for="Price"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="OriginalPrice"></label>
+                                <input required class="form-control" asp-for="OriginalPrice">
+                                <span class="text-danger" asp-validation-for="OriginalPrice"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Size"></label>
+                                <input required class="form-control" asp-for="Size">
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Description"></label>
+                                <textarea class="form-control" required class="form-control" asp-for="Description" rows="7"></textarea>
+
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Stock"></label>
+                                <input required class="form-control" asp-for="Stock">
+                                <span class="text-danger" asp-validation-for="Stock"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="FileUploads">uploads one or more.</label>
+                                <div class="input-group">
+                                    <div class="custom-file">
+                                        <input type="file" multiple asp-for="FileUploads" required />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <div class="d-flex justify-content-between">
+                                <a asp-action="Index" asp-controller="Product" class=" btn btn-secondary">Cancel</a>
+                                <input type="submit" value="Save" class="btn btn-success">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+        </div>
+    </div>
+    <!-- /.row -->
+    </div><!-- /.container-fluid -->
+</section>

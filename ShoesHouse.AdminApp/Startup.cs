@@ -49,6 +49,7 @@ namespace ShoesHouse.AdminApp
             //declare DI
             services.AddTransient<IUserApiClient, UserApiClient>();
             services.AddTransient<ICategoryService, CategoryApiClient>();
+            services.AddTransient<IProductService, ProductApiClient>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         }
 

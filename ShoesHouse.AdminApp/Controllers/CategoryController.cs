@@ -38,7 +38,6 @@ namespace ShoesHouse.AdminApp.Controllers
         [HttpPost]
         public async Task<IActionResult> Delete(int id)
         {
-            ViewBag.message = "unsuccessfully";
             var result = await _categoryService.DeleteCategoryAsync(id);
             if (result)
             {
