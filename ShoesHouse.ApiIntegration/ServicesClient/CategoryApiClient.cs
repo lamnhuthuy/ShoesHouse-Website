@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using ShoesHouse.ApiIntegration.InterfacesClient;
@@ -21,6 +22,7 @@ namespace ShoesHouse.ApiIntegration.ServicesClient
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly IConfiguration _config;
         private readonly IHttpContextAccessor _httpContextAccessor;
+
         public CategoryApiClient(IHttpClientFactory httpClientFactory, IConfiguration config, IHttpContextAccessor httpContextAccessor)
         {
             _httpClientFactory = httpClientFactory;
