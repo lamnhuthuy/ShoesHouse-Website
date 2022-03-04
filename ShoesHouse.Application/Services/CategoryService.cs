@@ -17,9 +17,11 @@ namespace ShoesHouse.Application.Services
     public class CategoryService : ICategoryService
     {
         private readonly ShoesHouseDbContext _context;
-        public CategoryService(ShoesHouseDbContext context)
+        private readonly IProductService _productService;
+        public CategoryService(ShoesHouseDbContext context, IProductService productService)
         {
             _context = context;
+            _productService = productService;
         }
 
         public async Task<int> CreateAsync(CategoryCreateRequest request)
@@ -45,6 +47,11 @@ namespace ShoesHouse.Application.Services
             if (category == null)
             {
                 throw new ShoesHouseException($"Cannot find category with Id = {categoryId}");
+            }
+            var productList = await _context.Products.Where(x => x.CategoryId == categoryId).ToListAsync();
+            foreach (var product in productList)
+            {
+                await _productService.DeleteAsync(product.Id);
             }
             _context.Categories.Remove(category);
 
