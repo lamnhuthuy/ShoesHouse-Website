@@ -102,9 +102,13 @@ namespace ShoesHouse.BackendApi
                     IssuerSigningKey = new SymmetricSecurityKey(signingKeyBytes)
                 };
             });
+            //add automapper
+            services.AddAutoMapper(typeof(Startup).Assembly);
             //Declare DI
             services.AddTransient<ICategoryService, CategoryService>();
             services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IProductService, ProductService>();
+            services.AddTransient<IStorageService, StorageService>();
             //DI for Identity
             services.AddTransient<UserManager<AppUser>, UserManager<AppUser>>();
             services.AddTransient<SignInManager<AppUser>, SignInManager<AppUser>>();

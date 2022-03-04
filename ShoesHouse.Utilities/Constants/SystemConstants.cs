@@ -13,6 +13,7 @@ namespace ShoesHouse.Utilities.Constants
         public class AppSettings
         {
             public const string Token = "Token";
+            public const string ImageUrl = "https://localhost:5001/user-content";
         }
     }
 }
