@@ -96,8 +96,10 @@ namespace ShoesHouse.AdminApp.Controllers
         public async Task<IActionResult> Update(int id)
         {
             var product = await _productService.GetByIdAsync(id);
+            ViewBag.category = await _categoryService.GetAllAsync();
             var productVm = new ProductUpdateRequest()
             {
+                Id = product.Id,
                 CategoryId = product.CategoryId,
                 Name = product.Name,
                 Stock = product.Stock,
@@ -106,8 +108,34 @@ namespace ShoesHouse.AdminApp.Controllers
                 Description = product.Description,
                 Size = product.Size,
             };
-
+            ViewBag.productImg = product.ProductImages;
+            if (TempData["result"] != null)
+            {
+                if (TempData["result"].ToString() == "true")
+                {
+                    ViewBag.message = "Update product successfully.";
+                }
+                else ViewBag.message = "Product couldn't update.";
+            }
             return View(productVm);
+        }
+        [HttpPost]
+        [Consumes("multipart/form-data")]
+        public async Task<IActionResult> Update(ProductUpdateRequest request)
+        {
+            var result = await _productService.UpdateProductAsync(request);
+            if (result)
+            {
+                TempData["result"] = "true";
+            }
+            else
+            {
+                TempData["result"] = "false";
+
+            }
+
+            return RedirectToAction("Update");
+            return View("Index");
         }
     }
 }
