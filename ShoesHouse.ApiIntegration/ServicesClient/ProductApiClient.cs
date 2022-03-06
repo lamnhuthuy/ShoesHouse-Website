@@ -102,5 +102,72 @@ namespace ShoesHouse.ApiIntegration.ServicesClient
 
             return JsonConvert.DeserializeObject<ProductViewModel>(await response.Content.ReadAsStringAsync());
         }
+
+        public async Task<bool> UpdateProductAsync(ProductUpdateRequest request)
+        {
+            var sessions = _httpContextAccessor.HttpContext.Session.GetString(SystemConstants.AppSettings.Token);
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_config["BaseAddress"]);
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessions);
+            var requestContent = new MultipartFormDataContent();
+            if (request.File1 != null)
+            {
+                byte[] data;
+                using (var br = new BinaryReader(request.File1.OpenReadStream()))
+                {
+                    data = br.ReadBytes((int)request.File1.OpenReadStream().Length);
+                }
+                ByteArrayContent bytes = new ByteArrayContent(data);
+                requestContent.Add(bytes, "File1", request.File1.FileName);
+
+            }
+            if (request.File2 != null)
+            {
+                byte[] data;
+                using (var br = new BinaryReader(request.File2.OpenReadStream()))
+                {
+                    data = br.ReadBytes((int)request.File2.OpenReadStream().Length);
+                }
+                ByteArrayContent bytes = new ByteArrayContent(data);
+                requestContent.Add(bytes, "File2", request.File2.FileName);
+
+            }
+            if (request.File3 != null)
+            {
+                byte[] data;
+                using (var br = new BinaryReader(request.File3.OpenReadStream()))
+                {
+                    data = br.ReadBytes((int)request.File3.OpenReadStream().Length);
+                }
+                ByteArrayContent bytes = new ByteArrayContent(data);
+                requestContent.Add(bytes, "File3", request.File3.FileName);
+
+            }
+            if (request.File4 != null)
+            {
+                byte[] data;
+                using (var br = new BinaryReader(request.File4.OpenReadStream()))
+                {
+                    data = br.ReadBytes((int)request.File4.OpenReadStream().Length);
+                }
+                ByteArrayContent bytes = new ByteArrayContent(data);
+                requestContent.Add(bytes, "File4", request.File4.FileName);
+            }
+            requestContent.Add(new StringContent(request.Id.ToString()), "Id");
+            requestContent.Add(new StringContent(request.Size.ToString()), "Size");
+            requestContent.Add(new StringContent(request.CategoryId.ToString()), "CategoryId");
+            requestContent.Add(new StringContent(request.Price.ToString()), "Price");
+            requestContent.Add(new StringContent(request.OriginalPrice.ToString()), "OriginalPrice");
+            requestContent.Add(new StringContent(request.Stock.ToString()), "Stock");
+            requestContent.Add(new StringContent(string.IsNullOrEmpty(request.Name) ? "" : request.Name.ToString()), "Name");
+            requestContent.Add(new StringContent(string.IsNullOrEmpty(request.Description) ? "" : request.Description.ToString()), "Description");
+            var response = await client.PutAsync($"/api/products/", requestContent);
+            if (response.IsSuccessStatusCode)
+            {
+                return JsonConvert.DeserializeObject<bool>(await response.Content.ReadAsStringAsync());
+            }
+            return false;
+
+        }
     }
 }
