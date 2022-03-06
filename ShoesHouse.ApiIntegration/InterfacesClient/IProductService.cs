@@ -16,6 +16,8 @@ namespace ShoesHouse.ApiIntegration.InterfacesClient
         Task<bool> DeleteProductAsync(int productId);
 
         Task<ProductViewModel> GetByIdAsync(int productId);
+        Task<bool> UpdateProductAsync(ProductUpdateRequest request);
+
 
     }
 }

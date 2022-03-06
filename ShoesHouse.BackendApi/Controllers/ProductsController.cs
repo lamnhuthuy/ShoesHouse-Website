@@ -88,7 +88,7 @@ namespace ShoesHouse.BackendApi.Controllers
 
                 if (result == 0)
                 {
-                    return BadRequest();
+                    return BadRequest(result);
                 }
 
                 return Ok(result);

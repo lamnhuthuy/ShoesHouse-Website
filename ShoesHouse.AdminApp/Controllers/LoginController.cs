@@ -35,7 +35,6 @@ namespace ShoesHouse.AdminApp.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return View();
         }
         [HttpPost]
@@ -69,7 +68,7 @@ namespace ShoesHouse.AdminApp.Controllers
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             HttpContext.Session.Remove(SystemConstants.AppSettings.Token);
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Login");
         }
         private ClaimsPrincipal ValidateToken(string jwtToken)
         {

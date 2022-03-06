@@ -27,12 +27,27 @@
                     </div>
                     <!-- /.card-header -->
                     <!-- form start -->
-                    <form method="post" enctype="multipart/form-data" asp-action="Create" asp-controller="Product">
+                    <form method="post" enctype="multipart/form-data" asp-action="Update" asp-controller="Product">
                         <div class="card-body">
                             <div class="form-group">
+                                <label asp-for="Id"></label>
+                                <input required asp-for="Id" class="form-control" type="text" disabled>
+                            </div>
+                            <div class="form-group">
                                 <label asp-for="CategoryId">Category type</label>
-                                <select class="form-control custom-select" required asp-for="CategoryId" asp-items="@ViewBag.MovieType">
-                                    <option disabled selected>Please select one</option>
+                                <select class="form-control custom-select" required asp-for="CategoryId">
+                                    @foreach (var item in ViewBag.category)
+                                    {
+                                        if (item.Id == Model.CategoryId)
+                                        {
+                                            <option value="@item.Id" selected>@item.Name</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@item.Id">@item.Name</option>
+                                        }
+
+                                    }
                                 </select>
                             </div>
                             <div class="form-group">
@@ -61,16 +76,25 @@
                             <div class="form-group">
                                 <label asp-for="Stock"></label>
                                 <input required class="form-control" asp-for="Stock">
-                                <span class="text-danger" asp-validation-for="Stock"></span>
+
                             </div>
-                            <div class="form-group">
-                                <label asp-for="FileUploads">uploads one or more.</label>
-                                <div class="input-group">
-                                    <div class="custom-file">
-                                        <input type="file" multiple asp-for="FileUploads" required />
+                            @for (int i = 0; i <= 3; i++)
+                            {
+                                var namefile = string.Concat("File", i + 1);
+                                <div class="form-group">
+                                    @if (i < ViewBag.ProductImg.Count)
+                                    {
+                                        <img src="@(SystemConstants.AppSettings.ImageUrl)/@(ViewBag.ProductImg[i].FileName)" style="max-width:100px" class="rounded" />
+                                    }
+                                    <label for="@namefile">Picture @(i+1).</label>
+                                    <div class="input-group">
+                                        <div class="custom-file">
+                                            <input type="file" id="@namefile" name="@namefile" />
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            }
+
                         </div>
                         <div class="card-footer">
                             <div class="d-flex justify-content-between">

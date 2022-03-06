@@ -104,13 +104,15 @@ namespace ShoesHouse.Application.Services
 
         public async Task<ProductViewModel> GetByIdAsync(int productId)
         {
-            var product = await _context.Products.Include(x => x.ProductImages).Include(x => x.Comments).ThenInclude(Comment => Comment.User).Where(product => product.Id == productId).FirstOrDefaultAsync();
+            var product = await _context.Products.Include(x => x.Category).Include(x => x.ProductImages).Include(x => x.Comments).ThenInclude(Comment => Comment.User).Where(product => product.Id == productId).FirstOrDefaultAsync();
             if (product == null)
             {
                 throw new ShoesHouseException($"Cannot find category with Id = {productId}");
             }
             var productVm = new ProductViewModel()
             {
+                CategoryId = product.CategoryId,
+                Stock = product.Stock,
                 Id = product.Id,
                 Name = product.Name,
                 Price = product.Price,
@@ -124,9 +126,100 @@ namespace ShoesHouse.Application.Services
 
         }
 
-        public Task<int> UpdateAsync(ProductUpdateRequest request)
+        public async Task<int> UpdateAsync(ProductUpdateRequest request)
         {
-            throw new NotImplementedException();
+            var product = await _context.Products.Include(x => x.ProductImages).Where(product => product.Id == request.Id).FirstOrDefaultAsync();
+            if (product == null)
+            {
+                throw new ShoesHouseException($"Cannot find category with Id = {request.Id}");
+            }
+            product.CategoryId = request.CategoryId;
+            product.Name = request.Name;
+            product.OriginalPrice = request.OriginalPrice;
+            product.Price = request.Price;
+            product.Stock = request.Stock;
+            product.Size = request.Size;
+            product.Description = request.Description;
+            product.DateModified = DateTime.Now;
+
+            var imgAmount = product.ProductImages.Count;
+            if (request.File1 != null)
+            {
+                if (0 < imgAmount)
+                {
+                    _storageService.DeleteFileAsync(product.ProductImages[0].FileName);
+                    product.ProductImages[0].FileName = await this.SaveFile(request.File1);
+                }
+                else
+                {
+                    var productImg = new ProductImage()
+                    {
+                        ProductId = product.Id,
+                        FileName = await this.SaveFile(request.File1),
+                        Caption = "Product image",
+                    };
+                    await _context.ProductImages.AddAsync(productImg);
+                }
+
+            }
+            if (request.File2 != null)
+            {
+                if (1 < imgAmount)
+                {
+                    _storageService.DeleteFileAsync(product.ProductImages[1].FileName);
+                    product.ProductImages[1].FileName = await this.SaveFile(request.File2);
+                }
+                else
+                {
+                    var productImg = new ProductImage()
+                    {
+                        ProductId = product.Id,
+                        FileName = await this.SaveFile(request.File2),
+                        Caption = "Product image",
+                    };
+                    await _context.ProductImages.AddAsync(productImg);
+                }
+
+            }
+            if (request.File3 != null)
+            {
+                if (2 < imgAmount)
+                {
+                    _storageService.DeleteFileAsync(product.ProductImages[2].FileName);
+                    product.ProductImages[2].FileName = await this.SaveFile(request.File3);
+                }
+                else
+                {
+                    var productImg = new ProductImage()
+                    {
+                        ProductId = product.Id,
+                        FileName = await this.SaveFile(request.File3),
+                        Caption = "Product image",
+                    };
+                    await _context.ProductImages.AddAsync(productImg);
+                }
+
+            }
+            if (request.File4 != null)
+            {
+                if (3 < imgAmount)
+                {
+                    _storageService.DeleteFileAsync(product.ProductImages[3].FileName);
+                    product.ProductImages[3].FileName = await this.SaveFile(request.File3);
+                }
+                else
+                {
+                    var productImg = new ProductImage()
+                    {
+                        ProductId = product.Id,
+                        FileName = await this.SaveFile(request.File4),
+                        Caption = "Product image",
+                    };
+                    await _context.ProductImages.AddAsync(productImg);
+                }
+
+            }
+            return await _context.SaveChangesAsync();
         }
         private async Task<string> SaveFile(IFormFile file)
         {
