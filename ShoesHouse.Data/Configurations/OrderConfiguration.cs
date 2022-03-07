@@ -17,6 +17,7 @@ namespace ShoesHouse.Data.Configurations
             builder.Property(x => x.DateDeleted).IsRequired(false);
             builder.Property(x => x.DateModified).IsRequired(false);
             builder.Property(x => x.DeliveryDate).IsRequired(false);
+            builder.Property(x => x.DateCreated).IsRequired(false);
             builder.Property(x => x.Total).HasColumnType("decimal(10,2)");
 
         }
