@@ -51,6 +51,7 @@ namespace ShoesHouse.AdminApp
             services.AddTransient<ICategoryService, CategoryApiClient>();
             services.AddTransient<IProductService, ProductApiClient>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddTransient<IOrderApiClient, OrderApiClient>();
         }
 
         private object IHttpContextAccesstor(IServiceProvider arg)
