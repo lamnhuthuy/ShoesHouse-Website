@@ -109,6 +109,7 @@ namespace ShoesHouse.BackendApi
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IProductService, ProductService>();
             services.AddTransient<IStorageService, StorageService>();
+            services.AddTransient<IOrderService, OrderService>();
             //DI for Identity
             services.AddTransient<UserManager<AppUser>, UserManager<AppUser>>();
             services.AddTransient<SignInManager<AppUser>, SignInManager<AppUser>>();
