@@ -1,4 +1,5 @@
-﻿using ShoesHouse.ViewModels.ViewModels;
+﻿using ShoesHouse.ViewModels.Requests.Order;
+using ShoesHouse.ViewModels.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,5 +11,7 @@ namespace ShoesHouse.ApiIntegration.InterfacesClient
     public interface IOrderApiClient
     {
         Task<List<OrderViewModel>> GetAllAsync();
+
+        Task<bool> UpdateStatusAsync(UpdateStatusRequest request);
     }
 }

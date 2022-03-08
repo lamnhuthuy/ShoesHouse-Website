@@ -10,6 +10,7 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\ShoesHouse.Application\ShoesHouse.Application.csproj" />
+		<ProjectReference Include="..\ShoesHouse.Data\ShoesHouse.Data.csproj" />
 		<ProjectReference Include="..\ShoesHouse.Utilities\ShoesHouse.Utilities.csproj" />
 		<ProjectReference Include="..\ShoesHouse.ViewModels\ShoesHouse.ViewModels.csproj" />
 	</ItemGroup>
