@@ -36,5 +36,30 @@ namespace ShoesHouse.BackendApi.Controllers
             }
             return Ok(resultToken);
         }
+        [HttpGet]
+        public async Task<IActionResult> Get()
+        {
+            var userName = await _userService.GetAllAsync();
+            return Ok(userName);
+        }
+        [HttpGet("{IdUser}")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetById(Guid IdUser)
+        {
+            try
+            {
+                var category = await _userService.GetByIdAsync(IdUser);
+                if (category == null)
+                {
+                    return NotFound($"Cannot find a user with Id: {IdUser}");
+                }
+
+                return Ok(category);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
     }
 }

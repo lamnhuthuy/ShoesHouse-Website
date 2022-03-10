@@ -7,7 +7,7 @@
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="<?= DOCUMENT_ROOT ?>/admin/home">Home</a></li>
+                    <li class="breadcrumb-item"><a asp-action="Create" asp-controller="Order">Home</a></li>
                     <li class="breadcrumb-item active">Category manage</li>
                 </ol>
             </div>
@@ -15,7 +15,7 @@
     </div><!-- /.container-fluid -->
 </section>
 <div id="alert"></div>
-<?php require_once(VIEW . "/admin/shared/notification.php") ?>
+<partial name="_Notification" />
 <section class="content">
     <div class="container-fluid">
         <div class="row">
@@ -23,8 +23,8 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="d-flex justify-content-between">
-                            <h3 class="card-title">All category bakery</h3>
-                            <a href="<?= DOCUMENT_ROOT ?>/admin/orders/create"><button class="btn btn-primary ">Create new order</button></a>
+                            <h3 class="card-title">All orders</h3>
+                            <a asp-action="Create" asp-controller="Order"><button class="btn btn-primary ">Create new order</button></a>
                         </div>
                     </div>
                     <!-- /.card-header -->
@@ -69,7 +69,36 @@
                                             </select>
                                         </td>
                                         <td>@order.Total.ToVND()</td>
-                                        <td>action</td>
+                                        <td class="project-actions text-center">
+                                            <a class="btn btn-info btn-sm mb-1" asp-action="Update" asp-controller="Order" asp-route-id="@order.Id">
+
+                                                <i class="fas fa-info-circle"></i> Details
+                                            </a>
+                                            <button class="btn btn-danger btn-sm mb-1 " data-toggle="modal" data-target="#deleteModal@(order.Id)">
+                                                <i class="fas fa-trash"></i> Delete
+                                            </button>
+                                        </td>
+                                        <div class="modal fade" id="deleteModal@(order.Id)" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel">Delete category</h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        Are you sure that you want to remove this item?
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                                        <form asp-controller="Order" asp-action="Delete" asp-route-id="@(order.Id)">
+                                                            <button class=" btn btn-primary">Delete</button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </tr>
 
                                 }

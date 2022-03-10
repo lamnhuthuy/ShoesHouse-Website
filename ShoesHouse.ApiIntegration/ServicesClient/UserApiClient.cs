@@ -4,6 +4,7 @@ using ShoesHouse.ApiIntegration.InterfacesClient;
 using ShoesHouse.Utilities.Constants;
 using ShoesHouse.ViewModels.Common;
 using ShoesHouse.ViewModels.Requests.System.Users;
+using ShoesHouse.ViewModels.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,6 +40,32 @@ namespace ShoesHouse.ApiIntegration.ServicesClient
 
             return JsonConvert.DeserializeObject<ApiErrorResult<string>>(await response.Content.ReadAsStringAsync());
 
+        }
+
+        public async Task<List<UserViewModel>> GetAllAsync()
+        {
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_config["BaseAddress"]);
+            var response = await client.GetAsync("/api/Users");
+            if (!response.IsSuccessStatusCode)
+            {
+                return null;
+            }
+
+            return JsonConvert.DeserializeObject<List<UserViewModel>>(await response.Content.ReadAsStringAsync());
+        }
+
+        public async Task<UserViewModel> GetByIdAsync(Guid Id)
+        {
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_config["BaseAddress"]);
+            var response = await client.GetAsync($"/api/Users/{Id}");
+            if (!response.IsSuccessStatusCode)
+            {
+                return null;
+            }
+
+            return JsonConvert.DeserializeObject<UserViewModel>(await response.Content.ReadAsStringAsync());
         }
     }
 }

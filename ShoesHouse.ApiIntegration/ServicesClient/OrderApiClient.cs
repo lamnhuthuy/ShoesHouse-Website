@@ -29,6 +29,70 @@ namespace ShoesHouse.ApiIntegration.ServicesClient
             _httpContextAccessor = httpContextAccessor;
         }
 
+        public async Task<OrderViewModel> CreateAsync(OrderCreateRequest request)
+        {
+            var sessions = _httpContextAccessor.HttpContext.Session.GetString(SystemConstants.AppSettings.Token);
+            var client = _httpClientFactory.CreateClient();
+            var json = JsonConvert.SerializeObject(request);
+            var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessions);
+            client.BaseAddress = new Uri(_config["BaseAddress"]);
+            var response = await client.PostAsync($"/api/Orders", httpContent);
+            if (response.IsSuccessStatusCode)
+            {
+                return JsonConvert.DeserializeObject<OrderViewModel>(await response.Content.ReadAsStringAsync());
+            }
+            return null;
+        }
+
+        public async Task<bool> CreateOrderDetailsAsync(OrderDetailRequest request)
+        {
+            var sessions = _httpContextAccessor.HttpContext.Session.GetString(SystemConstants.AppSettings.Token);
+            var client = _httpClientFactory.CreateClient();
+            var json = JsonConvert.SerializeObject(request);
+            var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessions);
+            client.BaseAddress = new Uri(_config["BaseAddress"]);
+            var response = await client.PostAsync($"/api/Orders/CreateOrderDetails", httpContent);
+            if (response.IsSuccessStatusCode)
+            {
+                return JsonConvert.DeserializeObject<bool>(await response.Content.ReadAsStringAsync());
+            }
+            return false;
+        }
+
+        public async Task<bool> DeleteOrderAsync(int idOrder)
+        {
+            var sessions = _httpContextAccessor.HttpContext.Session.GetString(SystemConstants.AppSettings.Token);
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_config["BaseAddress"]);
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessions);
+            var response = await client.DeleteAsync($"/api/Orders/{idOrder}");
+            var body = await response.Content.ReadAsStringAsync();
+            if (response.IsSuccessStatusCode)
+            {
+                return JsonConvert.DeserializeObject<bool>(body);
+
+            }
+            return false;
+        }
+
+        public async Task<bool> DeleteOrderDetails(int idOrder, int idProduct)
+        {
+            var sessions = _httpContextAccessor.HttpContext.Session.GetString(SystemConstants.AppSettings.Token);
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_config["BaseAddress"]);
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessions);
+            var response = await client.DeleteAsync($"/api/Orders/{idOrder}/{idProduct}");
+            var body = await response.Content.ReadAsStringAsync();
+            if (response.IsSuccessStatusCode)
+            {
+                return JsonConvert.DeserializeObject<bool>(body);
+
+            }
+            return false;
+        }
+
         public async Task<List<OrderViewModel>> GetAllAsync()
         {
             var client = _httpClientFactory.CreateClient();
@@ -42,7 +106,20 @@ namespace ShoesHouse.ApiIntegration.ServicesClient
             return JsonConvert.DeserializeObject<List<OrderViewModel>>(await response.Content.ReadAsStringAsync());
         }
 
-        public async Task<bool> UpdateStatusAsync(UpdateStatusRequest request)
+        public async Task<OrderViewModel> GetByIdAsync(int id)
+        {
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_config["BaseAddress"]);
+            var response = await client.GetAsync($"/api/Orders/{id}");
+            if (!response.IsSuccessStatusCode)
+            {
+                return null;
+            }
+
+            return JsonConvert.DeserializeObject<OrderViewModel>(await response.Content.ReadAsStringAsync());
+        }
+
+        public async Task<bool> UpdateOrderAsync(OrderUpdateRequest request)
         {
             var sessions = _httpContextAccessor.HttpContext.Session.GetString(SystemConstants.AppSettings.Token);
             var client = _httpClientFactory.CreateClient();
@@ -51,6 +128,22 @@ namespace ShoesHouse.ApiIntegration.ServicesClient
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessions);
             client.BaseAddress = new Uri(_config["BaseAddress"]);
             var response = await client.PutAsync($"/api/Orders", httpContent);
+            if (response.IsSuccessStatusCode)
+            {
+                return JsonConvert.DeserializeObject<bool>(await response.Content.ReadAsStringAsync());
+            }
+            return false;
+        }
+
+        public async Task<bool> UpdateStatusAsync(UpdateStatusRequest request)
+        {
+            var sessions = _httpContextAccessor.HttpContext.Session.GetString(SystemConstants.AppSettings.Token);
+            var client = _httpClientFactory.CreateClient();
+            var json = JsonConvert.SerializeObject(request);
+            var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessions);
+            client.BaseAddress = new Uri(_config["BaseAddress"]);
+            var response = await client.PutAsync($"/api/Orders/UpdateStatus", httpContent);
             if (response.IsSuccessStatusCode)
             {
                 return JsonConvert.DeserializeObject<bool>(await response.Content.ReadAsStringAsync());

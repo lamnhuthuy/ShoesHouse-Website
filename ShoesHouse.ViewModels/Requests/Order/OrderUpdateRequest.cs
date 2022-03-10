@@ -8,20 +8,15 @@ using System.Threading.Tasks;
 
 namespace ShoesHouse.ViewModels.Requests.Order
 {
-    public class OrderCreateRequest
+    public class OrderUpdateRequest
     {
-        [Required(ErrorMessage = "Username is required")]
-        [Display(Name = "UserName")]
+        public int Id { get; set; }
         public Guid UserId { get; set; }
-        [Required(ErrorMessage = "Status is required")]
         public Status Status { get; set; }
-
-        [Required(ErrorMessage = "Delivery date is required")]
-        [Display(Name = "Delivery Date")]
         public DateTime? DeliveryDate { get; set; }
-        [Required(ErrorMessage = "Order date is required")]
-        [Display(Name = "Order Date")]
         public DateTime? DateCreated { get; set; }
-
+        public List<OrderDetailRequest> OrderDetails { get; set; }
+        [DataType(DataType.Currency)]
+        public decimal Total { get; set; }
     }
 }

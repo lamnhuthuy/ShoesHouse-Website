@@ -1,0 +1,231 @@
+﻿@model OrderUpdateRequest
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Update</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="<?= DOCUMENT_ROOT ?>/admin/orders">Mange orders</a></li>
+                    <li class="breadcrumb-item active">Update order</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+<partial name="_Notification" />
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <!-- left column -->
+            <div class="col">
+                <!-- general form elements -->
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">Update order</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <!-- form start -->
+                    <form asp-action="Update" asp-controller="Order" method="post">
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label asp-for="Id"></label>
+                                <input class="form-control" asp-for="Id" disabled>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="UserId"></label>
+                                <input disabled asp-for="UserId" class="form-control">
+                                <div>
+                                    <span class="text-info">Name:</span>
+                                    @ViewBag.user.Name
+                                </div>
+                                <div>
+                                    <span class="text-info">Email: </span>
+                                    @ViewBag.user.Email
+                                </div>
+                                <div>
+                                    <span class="text-info">Phone: </span>
+                                    @ViewBag.user.PhoneNumber
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="DeliveryDate"></label>
+                                <input class="form-control" asp-for="DeliveryDate">
+
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="DateCreated"></label>
+                                <input class="form-control" asp-for="DateCreated">
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="Status"></label>
+                                @{
+                                    String[] names = Enum.GetNames(typeof(Status));
+                                    int[] values = (int[])Enum.GetValues(typeof(Status));
+                                }
+                                <select class="form-control custom-select" required>
+                                    @for (int i = 0; i < names.Length; i++)
+                                    {
+                                        if (((int)Model.Status) == values[i])
+                                        {
+                                            <option selected value="@values[i]">@names[i]</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@values[i]">@names[i]</option>
+                                        }
+                                    }
+                                </select>
+
+                            </div>
+                            <div>
+                                @if (Model.OrderDetails != null)
+                                {
+                                    @for (int i = 0; i < Model.OrderDetails.Count; i++)
+                                    {
+                                        <div class="row">
+                                            <div class="col-5">
+                                                <div class="form-group">
+                                                    <label asp-for="@Model.OrderDetails[i].IdProduct" for="@Model.OrderDetails[i].IdProduct"></label>
+                                                    <input asp-for="@Model.OrderDetails[i].IdProduct" required type="text" class="form-control" id="@Model.OrderDetails[i].IdProduct" value="@Model.OrderDetails[i].IdProduct">
+                                                </div>
+                                            </div>
+                                            <div class="col-5">
+                                                <div class="form-group">
+                                                    <label for="@Model.OrderDetails[i].IdProduct@Model.OrderDetails[i].Amount"></label>
+                                                    <input required type="number" class="form-control" id="@Model.OrderDetails[i].IdProduct@Model.OrderDetails[i].Amount" value="@Model.OrderDetails[i].Amount">
+                                                </div>
+                                            </div>
+                                            <div class="col-2 d-flex align-items-end justify-content-between">
+                                                <div class="form-group">
+                                                    <button class="btn btn-danger btn-sm mb-1" data-toggle="modal" data-target="#deleteModal@(Model.OrderDetails[i].IdProduct)" onclick="event.preventDefault()">
+                                                        <i class="fas fa-trash"></i> Delete
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="modal fade" id="deleteModal@(Model.OrderDetails[i].IdProduct)" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel">Delete item</h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        Are you sure that you want to remove this cake in order?
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                                        <a asp-controller="Order" asp-action="DeleteOrderDetails" asp-route-id="@Model.Id" asp-route-pr="@Model.OrderDetails[i].IdProduct" class="btn btn-primary"> Delete</a>
+
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                }
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Total"></label>
+                                <input class="form-control" asp-for="Total">
+                            </div>
+
+                        </div>
+                        <div class="card-footer">
+                            <div class="d-flex justify-content-between">
+                                <a href="<?= DOCUMENT_ROOT ?>/admin/Orders" class=" btn btn-secondary">Cancel</a>
+                                <div>
+                                    <button onclick="event.preventDefault()" type="button" class="btn btn-primary" data-toggle="modal" data-target="#plusModal">
+                                        Plus +
+                                    </button>
+                                    <input type="submit" value="Save" class="btn btn-success">
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+                <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+        </div>
+    </div>
+    <!-- /.row -->
+    </div><!-- /.container-fluid -->
+</section>
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+    Launch demo modal
+</button>
+<!-- Modal -->
+<div class="modal fade" id="plusModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Add cake in order</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form asp-action="CreateOrderDetails" asp-controller="Order" method="post">
+                    <div class="form-group" hidden>
+                        <label for="IdOrder">ID Prodcut</label>
+                        <input value="@Model.Id" type="text" class="form-control" id="IdOrder" name="IdOrder" hidden>
+                    </div>
+                    <div class="form-group">
+                        <label for="IdProduct">ID Prodcut</label>
+                        <input type="text" class="form-control" id="IdProduct" name="IdProduct">
+                    </div>
+                    <div class="form-group">
+                        <label for="Amount">Amount</label>
+                        <input max="99" min="1" name="Amount" type="number" class="form-control" id="Amount">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function validateDate() {
+        if (document.getElementById("order-date") && document.getElementById("delivery-date")) {
+            var order = new Date(document.getElementById("order-date").value);
+            var delivery = new Date(document.getElementById("delivery-date").value);
+            if (delivery < order) {
+                document.getElementById("messError").innerHTML = " Delivery date must not be less than order date!";
+                return false;
+            } else {
+                document.getElementById("messError").innerHTML = "";
+            }
+            return true;
+        }
+    }
+
+    function updateTotal(id_order, id_cake, amount) {
+        const xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                var obj = JSON.parse(this.responseText);
+                if (obj.mes == true) {
+                    var input = document.getElementById("price");
+                    input.value = new Intl.NumberFormat().format(parseInt(obj.total)) + " VND";
+                }
+            }
+        };
+        xhttp.open(
+            "GET", `<?= DOCUMENT_ROOT ?>/admin/Orders/getToTal?id_order=${id_order}&id_cake=${id_cake}&amount=${amount}`,
+            true
+        );
+        xhttp.send();
+    }
+</script>

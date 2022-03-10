@@ -29,7 +29,7 @@ namespace ShoesHouse.BackendApi.Controllers
             var orders = await _orderService.GetAllAsync();
             return Ok(orders);
         }
-        [HttpPut]
+        [HttpPut("UpdateStatus")]
         public async Task<IActionResult> UpdateStatusAsync(UpdateStatusRequest request)
         {
             var result = await _orderService.UpdateStatusAsync(request);
@@ -47,12 +47,107 @@ namespace ShoesHouse.BackendApi.Controllers
             {
                 return BadRequest();
             }
-            var data = await _categoryService.GetByIdAsync(categoryId);
+            var data = await _orderService.GetByIdAsync(orderId);
             if (data == null)
             {
-                return NotFound($"Cannot find a order with Id: {categoryId}");
+                return NotFound($"Cannot find a order with Id: {orderId}");
             }
             return Ok(data);
+        }
+        [HttpGet("{orderId}")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetById(int orderId)
+        {
+            try
+            {
+                var order = await _orderService.GetByIdAsync(orderId);
+                if (order == null)
+                {
+                    return NotFound($"Cannot find a cake with Id: {orderId}");
+                }
+
+                return Ok(order);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+        [HttpDelete("{orderId}")]
+        [AllowAnonymous]
+        public async Task<IActionResult> Delete(int orderId)
+        {
+            try
+            {
+                var result = await _orderService.DeleteOrderAsync(orderId);
+                if (result == 0)
+                {
+                    return BadRequest(result);
+                }
+                return Ok(result);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+        [HttpPut]
+        public async Task<IActionResult> Update([FromBody] OrderUpdateRequest request)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+                var result = await _orderService.UpdateOrderAsync(request);
+
+                if (result == 0)
+                {
+                    return BadRequest();
+                }
+
+                return Ok(result);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+        [HttpDelete("{orderId}/{productId}")]
+        [AllowAnonymous]
+        public async Task<IActionResult> DeleteOrderDetails(int orderId, int productId)
+        {
+            try
+            {
+                var result = await _orderService.DeleteOrderDetails(orderId, productId);
+                if (result == 0)
+                {
+                    return BadRequest(result);
+                }
+                return Ok(result);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+        [HttpPost("CreateOrderDetails")]
+        [AllowAnonymous]
+        public async Task<IActionResult> CreateOrderDetailsAsync([FromBody] OrderDetailRequest request)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var orderId = await _orderService.CreateOrderDetailsAsync(request);
+            if (orderId == 0)
+            {
+                return BadRequest();
+            }
+            return Ok(orderId);
         }
     }
 }

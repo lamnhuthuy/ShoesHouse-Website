@@ -13,5 +13,17 @@ namespace ShoesHouse.ApiIntegration.InterfacesClient
         Task<List<OrderViewModel>> GetAllAsync();
 
         Task<bool> UpdateStatusAsync(UpdateStatusRequest request);
+
+        Task<OrderViewModel> CreateAsync(OrderCreateRequest request);
+
+        Task<bool> DeleteOrderAsync(int idOrder);
+
+        Task<bool> UpdateOrderAsync(OrderUpdateRequest request);
+
+        Task<OrderViewModel> GetByIdAsync(int id);
+
+        Task<bool> DeleteOrderDetails(int idOrder, int idProduct);
+
+        Task<bool> CreateOrderDetailsAsync(OrderDetailRequest request);
     }
 }

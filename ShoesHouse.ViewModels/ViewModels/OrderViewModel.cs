@@ -10,11 +10,12 @@ namespace ShoesHouse.ViewModels.ViewModels
     public class OrderViewModel
     {
         public int Id { get; set; }
-
+        public Guid IdUser { get; set; }
         public string UserName { get; set; }
         public Status Status { get; set; }
         public DateTime? DeliveryDate { get; set; }
         public DateTime? DateCreated { get; set; }
+        public List<OrderDetailsViewModel> OrderDetails { get; set; }
         public decimal Total { get; set; }
     }
 }

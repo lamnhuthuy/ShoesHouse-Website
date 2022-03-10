@@ -1,10 +1,14 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using ShoesHouse.Data.EF;
 using ShoesHouse.Data.Entities;
+using ShoesHouse.Utilities.Exceptions;
 using ShoesHouse.ViewModels.Common;
 using ShoesHouse.ViewModels.Requests.System.Users;
+using ShoesHouse.ViewModels.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
@@ -22,13 +26,16 @@ namespace ShoesHouse.Application.System.Users
         private readonly IConfiguration _config;
         private readonly SignInManager<AppUser> _signInManager;
         private readonly RoleManager<AppRole> _roleManager;
-        public UserService(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, IConfiguration config, ShoesHouseDbContext context, RoleManager<AppRole> roleManager)
+        private readonly IMapper _mapper;
+        public UserService(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, IConfiguration config,
+            ShoesHouseDbContext context, RoleManager<AppRole> roleManager, IMapper mapper)
         {
             _context = context;
             _config = config;
             _userManager = userManager;
             _signInManager = signInManager;
             _roleManager = roleManager;
+            _mapper = mapper;
         }
 
         public async Task<ApiResult<string>> AuthenticateAsync(LoginRequest request)
@@ -46,7 +53,7 @@ namespace ShoesHouse.Application.System.Users
             {
                 new Claim(ClaimTypes.Email,user.Email),
                 new Claim(ClaimTypes.Role, string.Join(";",roles)),
-                new Claim(ClaimTypes.Name, user.UserName),
+                new Claim(ClaimTypes.Name, user.Name),
                 new Claim("Id", user.Id.ToString()),
                 new Claim("Role", string.Join(";", roles)),
                 new Claim("UserName", user.UserName.ToString()),
@@ -54,7 +61,8 @@ namespace ShoesHouse.Application.System.Users
                 new Claim("Address", user.Address != null ? user.Address.ToString(): ""),
                 new Claim("DoB", user.DoB.ToString()),
                 new Claim("PhoneNumber", user.PhoneNumber != null ? user.PhoneNumber.ToString() : ""),
-                new Claim("Email", user.Email != null ? user.Email.ToString() : "")
+                new Claim("Email", user.Email != null ? user.Email.ToString() : ""),
+                 new Claim("Avartar", user.Avatar != null ?  user.Avatar.ToString() : "")
             };
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Tokens:Key"]));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
@@ -66,6 +74,42 @@ namespace ShoesHouse.Application.System.Users
                 signingCredentials: creds);
 
             return new ApiSuccessResult<string>(new JwtSecurityTokenHandler().WriteToken(token));
+        }
+        public async Task<List<UserViewModel>> GetAllAsync()
+        {
+            return await _userManager.Users.Where(m => m.UserName != "admin")
+                .Select(x => new UserViewModel()
+                {
+                    Id = x.Id,
+                    Name = x.Name,
+                    Address = x.Address,
+                    Avatar = x.Avatar,
+                    PhoneNumber = x.PhoneNumber,
+                    DoB = x.DoB,
+                    Email = x.Email,
+                }
+            ).ToListAsync();
+
+        }
+
+        public async Task<UserViewModel> GetByIdAsync(Guid id)
+        {
+            var user = await _userManager.FindByIdAsync(id.ToString());
+            if (user == null)
+            {
+                throw new ShoesHouseException($"Cannot find user with Id = {id}");
+            }
+            var userVm = new UserViewModel()
+            {
+                Email = user.Email,
+                PhoneNumber = user.PhoneNumber,
+                Id = user.Id,
+                Address = user.Address,
+                Avatar = user.Avatar,
+                DoB = user.DoB,
+                Name = user.Name,
+            };
+            return userVm;
         }
     }
 }

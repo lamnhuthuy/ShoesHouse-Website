@@ -18,6 +18,7 @@ namespace ShoesHouse.Data.Entities
         public DateTime? DateModified { get; set; }
         public DateTime? DateDeleted { get; set; }
 
+        public List<OrderDetail> OrderDetails { get; set; }
         public DateTime? DateCreated { get; set; }
         public decimal Total { get; set; }
 

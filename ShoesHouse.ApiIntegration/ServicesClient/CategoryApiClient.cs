@@ -32,7 +32,6 @@ namespace ShoesHouse.ApiIntegration.ServicesClient
 
         public async Task<CategoryViewModel> CreateCategoryAsync(CategoryCreateRequest request)
         {
-
             var sessions = _httpContextAccessor.HttpContext.Session.GetString(SystemConstants.AppSettings.Token);
             var client = _httpClientFactory.CreateClient();
             var json = JsonConvert.SerializeObject(request);

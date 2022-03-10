@@ -9,10 +9,10 @@
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="image">
-                <img src="/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+                <img src="/dist/img/@ViewBag.avt" class="img-circle elevation-2" alt="User Image">
             </div>
             <div class="info">
-                <a href="#" class="d-block">Lam Nhut Huy</a>
+                <a href="#" class="d-block">@User.Identity.Name</a>
             </div>
         </div>
 
@@ -53,7 +53,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="pages/gallery.html" class="nav-link">
+                    <a asp-controller="User" asp-action="Index" class="nav-link @(ViewContext.RouteData.Values["Controller"].ToString()=="User" ? "active" : "")">
                         <i class="nav-icon fas fa-users"></i>
                         <p>
                             Manage Customers

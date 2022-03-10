@@ -1,0 +1,107 @@
+﻿@model OrderCreateRequest
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Update</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a asp-action="Index" asp-controller="Order">Mange orders</a></li>
+                    <li class="breadcrumb-item active">Create order</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+<partial name="_Notification" />
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <!-- left column -->
+            <div class="col">
+                <!-- general form elements -->
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">Update order</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <!-- form start -->
+                    <form method="post" asp-action="Create" asp-controller="Order" onsubmit="return checksubmit()">
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label asp-for="UserId">ID Order</label>
+                                <select class="form-control custom-select" asp-for="UserId" required>
+                                    <option value="" selected disabled>Please select one</option>
+                                    @foreach (var user in ViewBag.Users)
+                                    {
+                                        <option value="@user.Id">@user.Name</option>
+                                    }
+                                </select>
+                                <span asp-validation-for="UserId"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="DeliveryDate"></label>
+                                <input id="delivery-date" onchange="validateDate()" class="form-control" asp-for="DeliveryDate" required>
+                                <span asp-validation-for="DeliveryDate"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="DateCreated"></label>
+                                <input id="order-date" onchange="validateDate()" class="form-control" asp-for="DateCreated" required>
+
+                                <span asp-validation-for="DateCreated" id="messError" class="text-danger mb-1"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Status"></label>
+                                @{
+                                    String[] names = Enum.GetNames(typeof(Status));
+                                    int[] values = (int[])Enum.GetValues(typeof(Status));
+                                }
+                                <select class="form-control custom-select" asp-for="Status" required>
+                                    <option value="" selected disabled>Please select one</option>
+                                    @for (int i = 0; i < names.Length; i++)
+                                    {
+                                        <option value="@values[i]">@names[i]</option>
+                                    }
+                                </select>
+                                <span asp-validation-for="Status"></span>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <div class="d-flex justify-content-between">
+                                <a asp-action="Index" asp-controller="Order" class=" btn btn-secondary">Cancel</a>
+                                <input type="submit" value="Save" class="btn btn-success">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+        </div>
+    </div>
+    <!-- /.row -->
+    </div><!-- /.container-fluid -->
+</section>
+<script>
+    function validateDate() {
+        console.log("hhh");
+        if (document.getElementById("order-date") && document.getElementById("delivery-date")) {
+            var order = new Date(document.getElementById("order-date").value);
+            var delivery = new Date(document.getElementById("delivery-date").value);
+            if (delivery < order) {
+                document.getElementById("messError").innerHTML = " Delivery date must not be less than order date!";
+                return false;
+            } else {
+                document.getElementById("messError").innerHTML = "";
+            }
+            return true;
+        }
+    }
+    function checksubmit() {
+        var res1 = validateDate();
+        if (res1) {
+            return true;
+        } else return false
+    }
+</script>

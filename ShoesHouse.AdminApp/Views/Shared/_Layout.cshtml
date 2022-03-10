@@ -23,7 +23,7 @@
         <!-- Navbar -->
         <partial name="_Header" />
         <!-- /.navbar -->
-        @await Component.InvokeAsync("Navigation")
+        @await Component.InvokeAsync("Navigation", ViewBag.Claims)
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">
             @RenderBody()
