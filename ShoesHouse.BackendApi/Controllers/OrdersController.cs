@@ -73,6 +73,25 @@ namespace ShoesHouse.BackendApi.Controllers
                 return BadRequest(e.Message);
             }
         }
+        [HttpGet("UserId/{UserId}")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetByUserId(Guid UserId)
+        {
+            try
+            {
+                var order = await _orderService.GetByUserIdAsync(UserId);
+                if (order == null)
+                {
+                    return NotFound($"Cannot find a cake with Id: {UserId}");
+                }
+
+                return Ok(order);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
         [HttpDelete("{orderId}")]
         [AllowAnonymous]
         public async Task<IActionResult> Delete(int orderId)

@@ -126,12 +126,53 @@ namespace ShoesHouse.Application.Services
                 DateCreated = order.DateCreated,
                 OrderDetails = _mapper.Map<List<OrderDetailsViewModel>>(order.OrderDetails),
                 Total = order.Total,
-
             };
+            if (order.OrderDetails != null)
+            {
+                for (int i = 0; i < order.OrderDetails.Count(); i++)
+                {
+                    orderVm.OrderDetails[i].Size = order.OrderDetails[i].Product.Size;
+                    orderVm.OrderDetails[i].OriginalPrice = order.OrderDetails[i].Product.OriginalPrice;
+                }
+            }
             return orderVm;
 
         }
 
+        public async Task<List<OrderViewModel>> GetByUserIdAsync(Guid id)
+        {
+            var orderlist = await _context.Orders.Include(x => x.User).Include(x => x.OrderDetails)
+                  .ThenInclude(OrderDetail => OrderDetail.Product)
+                  .ThenInclude(Product => Product.ProductImages)
+                  .Where(x => x.UserId == id).ToListAsync();
+            List<OrderViewModel> listUserOrder = new List<OrderViewModel>();
+            foreach (var order in orderlist)
+            {
+                var orderVm = new OrderViewModel()
+                {
+                    IdUser = order.UserId,
+                    Id = order.Id,
+                    UserName = order.User.Name,
+                    Status = order.Status,
+                    DeliveryDate = order.DeliveryDate,
+                    DateCreated = order.DateCreated,
+                    OrderDetails = _mapper.Map<List<OrderDetailsViewModel>>(order.OrderDetails),
+                    Total = order.Total,
+                };
+                if (order.OrderDetails != null)
+                {
+                    for (int i = 0; i < order.OrderDetails.Count(); i++)
+                    {
+                        orderVm.OrderDetails[i].Size = order.OrderDetails[i].Product.Size;
+                        orderVm.OrderDetails[i].OriginalPrice = order.OrderDetails[i].Product.OriginalPrice;
+                    }
+                }
+                listUserOrder.Add(orderVm);
+            }
+
+            return listUserOrder;
+
+        }
         public async Task<int> UpdateOrderAsync(OrderUpdateRequest request)
         {
             var order = await _context.Orders.FindAsync(request.Id);

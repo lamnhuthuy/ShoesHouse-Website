@@ -16,6 +16,7 @@ namespace ShoesHouse.Application.Interfaces
         Task<int> CreateOrderAsync(OrderCreateRequest request);
         Task<int> DeleteOrderAsync(int orderId);
         Task<OrderViewModel> GetByIdAsync(int id);
+        Task<List<OrderViewModel>> GetByUserIdAsync(Guid id);
 
         Task<int> UpdateOrderAsync(OrderUpdateRequest request);
 
