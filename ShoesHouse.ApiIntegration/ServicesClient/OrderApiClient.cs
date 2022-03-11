@@ -119,6 +119,19 @@ namespace ShoesHouse.ApiIntegration.ServicesClient
             return JsonConvert.DeserializeObject<OrderViewModel>(await response.Content.ReadAsStringAsync());
         }
 
+        public async Task<List<OrderViewModel>> GetByUserIdAsync(Guid id)
+        {
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_config["BaseAddress"]);
+            var response = await client.GetAsync($"/api/Orders/UserId/{id}");
+            if (!response.IsSuccessStatusCode)
+            {
+                return null;
+            }
+
+            return JsonConvert.DeserializeObject<List<OrderViewModel>>(await response.Content.ReadAsStringAsync());
+        }
+
         public async Task<bool> UpdateOrderAsync(OrderUpdateRequest request)
         {
             var sessions = _httpContextAccessor.HttpContext.Session.GetString(SystemConstants.AppSettings.Token);

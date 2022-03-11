@@ -25,5 +25,7 @@ namespace ShoesHouse.ApiIntegration.InterfacesClient
         Task<bool> DeleteOrderDetails(int idOrder, int idProduct);
 
         Task<bool> CreateOrderDetailsAsync(OrderDetailRequest request);
+
+        Task<List<OrderViewModel>> GetByUserIdAsync(Guid id);
     }
 }
