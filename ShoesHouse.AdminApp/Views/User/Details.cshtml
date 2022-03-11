@@ -1,0 +1,109 @@
+﻿@model UserDetailsViewModel
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Information</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="<?= DOCUMENT_ROOT ?>/admin/customers">Mange customers</a></li>
+                    <li class="breadcrumb-item active">Information customer</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <!-- left column -->
+            <div class="col">
+                <!-- general form elements -->
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">Customer</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <!-- form start -->
+
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label asp-for="UserViewModel.Name"></label>
+                            <input disabled asp-for="UserViewModel.Name" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="UserViewModel.PhoneNumber"></label>
+                            <input class="form-control" disabled asp-for="UserViewModel.PhoneNumber">
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="UserViewModel.Address"></label>
+                            <input class="form-control" disabled asp-for="UserViewModel.Address">
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="UserViewModel.Email"></label>
+                            <input class="form-control" disabled asp-for="UserViewModel.Email">
+                        </div>
+                        <div class="form-group">
+                            <label>@Model.OrderViewModel.Count</label>
+                            @foreach (var item in Model.OrderViewModel)
+                            {
+                                <div class="mb-3 border-bottom">
+                                    <label>#@item.Id</label>
+                                    @foreach (var dt in item.OrderDetails)
+                                    {
+                                        <div class="row mb-3">
+                                            <div class="col-sm-3">
+                                                <img style="max-width: 100px;" class="rounded" src="@SystemConstants.AppSettings.ImageUrl/@dt.FileName">
+                                            </div>
+                                            <div class="col-sm-9">
+                                                <div>
+                                                    <span class="text-info">Name: </span>
+                                                    @dt.ProductName
+                                                </div>
+                                                <div>
+                                                    <span class="text-info">Price: </span>
+                                                    @dt.OriginalPrice
+                                                </div>
+                                                <div>
+                                                    <span class="text-info">Quantity: </span>
+                                                    @dt.Amount
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+
+                                    <div class="row-sm-3">
+                                        <div>
+                                            <span class="text-primary">Order day: </span>
+                                            @item.DateCreated
+                                        </div>
+                                        <div>
+                                            <span class="text-primary">Status: </span>
+                                            @item.Status
+                                        </div>
+                                        <div>
+                                            <span class="text-danger">Total: </span>
+                                            @item.Total.ToVND()
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+
+                        <div class="card-footer">
+                            <div class="d-flex justify-content-end">
+                                <a href="<?= DOCUMENT_ROOT ?>/admin/Customers" class=" btn btn-secondary">Exit</a>
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+            </div>
+        </div>
+        <!-- /.row -->
+    </div><!-- /.container-fluid -->
+</section>
