@@ -3,6 +3,7 @@ using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using ShoesHouse.ApiIntegration.InterfacesClient;
 using ShoesHouse.Utilities.Constants;
+using ShoesHouse.ViewModels.Common;
 using ShoesHouse.ViewModels.Requests.Product;
 using ShoesHouse.ViewModels.ViewModels;
 using System;
@@ -90,6 +91,22 @@ namespace ShoesHouse.ApiIntegration.ServicesClient
             return JsonConvert.DeserializeObject<List<ProductViewModel>>(await response.Content.ReadAsStringAsync());
         }
 
+        public async Task<PagedResult<ProductViewModel>> GetAllPagingAsync(GetProductPagingRequest request)
+        {
+            string categoryIds = request.CategoryIds != null ? String.Join(", ", request.CategoryIds.Select(id => $"categoryids={id}&").ToArray()) : "";
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_config["BaseAddress"]);
+            var response = await client.GetAsync($"/api/products/paging?pageIndex={request.PageIndex}" +
+                $"&pageSize={request.PageSize}" +
+                $"&keyword={request.Keyword}&categoryId={categoryIds}");
+            if (!response.IsSuccessStatusCode)
+            {
+                return null;
+            }
+
+            return JsonConvert.DeserializeObject<PagedResult<ProductViewModel>>(await response.Content.ReadAsStringAsync());
+        }
+
         public async Task<ProductViewModel> GetByIdAsync(int productId)
         {
             var client = _httpClientFactory.CreateClient();
@@ -101,6 +118,19 @@ namespace ShoesHouse.ApiIntegration.ServicesClient
             }
 
             return JsonConvert.DeserializeObject<ProductViewModel>(await response.Content.ReadAsStringAsync());
+        }
+
+        public async Task<List<ProductViewModel>> GetLatestProductAsync()
+        {
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_config["BaseAddress"]);
+            var response = await client.GetAsync("/api/Products/LatestProduct");
+            if (!response.IsSuccessStatusCode)
+            {
+                return null;
+            }
+
+            return JsonConvert.DeserializeObject<List<ProductViewModel>>(await response.Content.ReadAsStringAsync());
         }
 
         public async Task<bool> UpdateProductAsync(ProductUpdateRequest request)

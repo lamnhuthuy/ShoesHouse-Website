@@ -1,4 +1,5 @@
-﻿using ShoesHouse.ViewModels.Requests.Product;
+﻿using ShoesHouse.ViewModels.Common;
+using ShoesHouse.ViewModels.Requests.Product;
 using ShoesHouse.ViewModels.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -18,6 +19,8 @@ namespace ShoesHouse.ApiIntegration.InterfacesClient
         Task<ProductViewModel> GetByIdAsync(int productId);
         Task<bool> UpdateProductAsync(ProductUpdateRequest request);
 
+        Task<List<ProductViewModel>> GetLatestProductAsync();
 
+        Task<PagedResult<ProductViewModel>> GetAllPagingAsync(GetProductPagingRequest request);
     }
 }

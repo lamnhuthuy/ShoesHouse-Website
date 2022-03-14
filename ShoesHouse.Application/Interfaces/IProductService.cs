@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ShoesHouse.ViewModels.Common;
 using ShoesHouse.ViewModels.Requests.Product;
 using ShoesHouse.ViewModels.ViewModels;
 
@@ -19,5 +20,8 @@ namespace ShoesHouse.Application.Interfaces
 
         Task<ProductViewModel> GetByIdAsync(int productId);
 
+        Task<PagedResult<ProductViewModel>> GetAllPagingAsync(GetProductPagingRequest request);
+
+        Task<List<ProductViewModel>> GetLatestProduct();
     }
 }

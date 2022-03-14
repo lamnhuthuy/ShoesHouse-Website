@@ -9,7 +9,6 @@
 		<PackageReference Include="Microsoft.AspNetCore.Session" Version="2.2.0" />
 		<PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
 	</ItemGroup>
-
 	<ItemGroup>
 		<ProjectReference Include="..\ShoesHouse.ApiIntegration\ShoesHouse.ApiIntegration.csproj" />
 	</ItemGroup>
