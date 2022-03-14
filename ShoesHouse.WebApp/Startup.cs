@@ -1,9 +1,12 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using ShoesHouse.ApiIntegration.InterfacesClient;
+using ShoesHouse.ApiIntegration.ServicesClient;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,7 +26,15 @@ namespace ShoesHouse.WebApp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddHttpClient();
             services.AddControllersWithViews();
+
+            //Declare DI
+            services.AddTransient<IUserApiClient, UserApiClient>();
+            services.AddTransient<ICategoryService, CategoryApiClient>();
+            services.AddTransient<IProductService, ProductApiClient>();
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddTransient<IOrderApiClient, OrderApiClient>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
