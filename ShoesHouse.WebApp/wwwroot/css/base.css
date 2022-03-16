@@ -120,3 +120,8 @@ svg circle {
     color: (--primary-title);
     margin: 40px;
 }
+
+.margin-top {
+    margin-top: 90px;
+    margin-bottom: 50px;
+}

@@ -264,7 +264,10 @@
                                 </div>
                             </p>
                         </div>
-                        <button class="btn release-btn"> Add to basket </button>
+                        @{
+                            string id = User.Identity.IsAuthenticated ? User.Claims.Where(x => x.Type == "Id").FirstOrDefault().Value.ToString() : "0";
+                        }
+                        <button onclick='addToCart(@item.Id, "@id")' class="btn release-btn"> Add to basket </button>
                     </div>
                 </div>
             }
@@ -284,3 +287,4 @@
 
     </div>
 </div>
+

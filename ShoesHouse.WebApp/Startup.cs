@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -27,9 +28,22 @@ namespace ShoesHouse.WebApp
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddHttpClient();
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
+            {
+                options.LoginPath = "/Login/Index";
+                options.AccessDeniedPath = "/User/Forbidden/";
+
+            });
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromHours(3);
+                options.Cookie.IsEssential = true;
+            });
             services.AddControllersWithViews();
 
+
             //Declare DI
+            services.AddTransient<ICartApiClient, CartApiClient>();
             services.AddTransient<IUserApiClient, UserApiClient>();
             services.AddTransient<ICategoryService, CategoryApiClient>();
             services.AddTransient<IProductService, ProductApiClient>();
@@ -52,11 +66,10 @@ namespace ShoesHouse.WebApp
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
+            app.UseAuthentication();
             app.UseRouting();
-
             app.UseAuthorization();
-
+            app.UseSession();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

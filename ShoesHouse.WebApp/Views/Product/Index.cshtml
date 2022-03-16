@@ -1,0 +1,53 @@
+﻿@model ProductVm
+<div class="container margin-top">
+    <div class="popular">
+        <h3 class="title popular-title"><span>Shoes</span></h3>
+        <div class="release-item">
+            @if (Model.Products.Items.Count != 0)
+            {
+                @foreach (var item in Model.Products.Items)
+                {
+                    <div class="release-item1">
+                        <img style="border-radius:20px" src="@(SystemConstants.AppSettings.ImageUrl)/@item.ProductImages.FirstOrDefault().FileName" alt="">
+                        <div class="item1-info">
+                            <p class="item1-name">@item.Name</p>
+                            <p class="price">@item.OriginalPrice.ToVND()</p>
+                            <div class="color-circle">
+                                <p class="color">
+                                    3 colors
+                                    <div>
+                                        <div class="circle red"></div>
+                                        <div class="circle blue"></div>
+                                        <div class="circle black"></div>
+                                    </div>
+                                </p>
+                            </div>
+                            <button class="btn release-btn"> Add to basket </button>
+                        </div>
+                    </div>
+                }
+
+
+
+            }
+            else
+            {
+                <p class="item1-name" style="margin-bottom: 15px; font-size:20px;">No result</p>
+            }
+
+        </div>
+        @if (Model.Products.Items.Count != 0)
+        {
+            PagedNumberModel pagedModel = new PagedNumberModel
+            {
+                Page = Model.Products.PageIndex,
+                PageCount = Model.Products.PageCount,
+                Action = "Index",
+                Controller = "Home",
+
+            };
+            <partial name="_PagedNumbers" model="@pagedModel" />
+        }
+
+    </div>
+</div>

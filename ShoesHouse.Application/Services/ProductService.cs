@@ -120,6 +120,14 @@ namespace ShoesHouse.Application.Services
                 CategoryId = product.CategoryId,
                 Stock = product.Stock
             }).ToListAsync();
+            if (!string.IsNullOrEmpty(request.Keyword))
+            {
+                result = result.Where(x => x.Name.Contains(request.Keyword) || x.CategoryName.Contains(request.Keyword)).ToList();
+            }
+            if (request.CategoryIds?.Count > 0)
+            {
+                result = result.Where(p => request.CategoryIds.Contains(p.CategoryId)).ToList();
+            }
             int totalRow = result.Count();
             request.PageSize = request.PageSize > 0 ? request.PageSize : 999;
             request.PageIndex = request.PageIndex > 0 ? request.PageIndex : 1;

@@ -4,27 +4,34 @@
             <i class="fas fa-bars"></i>
         </span>
         <div class="header-logo">
-            <a href="#/">
+            <a asp-action="Index" asp-controller="Home">
                 <img src="/image/Walk in line.png" alt="Shoe'sHouse" />
             </a>
             <p class="header-logo-name">Bring power to your steps</p>
         </div>
-        <form class="header-search">
-            <input type="text" placeholder="Search shoes, images..." />
+        <form class="header-search" asp-action="Index" asp-controller="Product" method="get">
+            <input type="text" placeholder="Search..." name="keyword" id="search" />
             <button><i class="fas fa-search"></i></button>
         </form>
-        <a href="#/" class="header-login">
-            <button id="btn" class="btn btn-primary btn-login">Sign In</button>
-        </a>
-        <div class="header-user">
-            <div class="img-user">
-                <img src="img/balance1.jpg" alt="user avatar">
+        @if (User.Identity.IsAuthenticated)
+        {
+            <div class="header-user">
+                <div class="img-user">
+                    <img src="img/balance1.jpg" alt="user avatar">
+                </div>
+                <div class="user-info">
+                    <a href="#/" class="user-info-item">Profile</a>
+                    <a asp-action="Logout" asp-controller="Login" class="user-info-item">Sign out</a>
+                </div>
             </div>
-            <div class="user-info">
-                <a href="#/" class="user-info-item">Profile</a>
-                <a href="#/" class="user-info-item">Sign out</a>
-            </div>
-        </div>
+        }
+        else
+        {
+            <a asp-action="Index" asp-controller="Login" class="header-login">
+                <button id="btn" class="btn btn-primary btn-login">Sign In</button>
+            </a>
+        }
+
     </header>
 </div>
 <div class="menu-bar">
@@ -36,12 +43,12 @@
             </a>
         </li>
         <li class="menu-bar-item">
-            <a href="cart.html">
+            <a asp-action="Index" asp-controller="Cart">
                 <i class="fas fa-cart-plus"></i>
                 <span>Basket</span>
             </a>
-            <div class="cart-number">
-                99
+            <div class="cart-number" id="cart-number">
+                0
             </div>
         </li>
         <li class="menu-bar-item">

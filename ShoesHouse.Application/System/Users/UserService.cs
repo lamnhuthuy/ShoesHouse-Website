@@ -40,10 +40,18 @@ namespace ShoesHouse.Application.System.Users
 
         public async Task<ApiResult<string>> AuthenticateAsync(LoginRequest request)
         {
-            var user = await _userManager.FindByNameAsync(request.UserName);
+            var username = request.UserName;
+            var emailCheck = await _context.Users.FirstOrDefaultAsync(x => x.Email == request.UserName);
+            if (emailCheck != null)
+            {
+                username = emailCheck.UserName;
+            }
+
+            var user = await _userManager.FindByEmailAsync(emailCheck.Email);
+
             if (user == null) return new ApiErrorResult<string>("Tài khoản không tồn tại");
 
-            var result = await _signInManager.PasswordSignInAsync(user.UserName, request.Password, request.RememberMe, true);
+            var result = await _signInManager.PasswordSignInAsync(user, request.Password, request.RememberMe, true);
             if (!result.Succeeded)
             {
                 return new ApiErrorResult<string>("Đăng nhập không đúng");
