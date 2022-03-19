@@ -62,5 +62,60 @@ namespace ShoesHouse.BackendApi.Controllers
                 return BadRequest(e.Message);
             }
         }
+        [HttpPost("Delete")]
+
+        public async Task<IActionResult> Delete(CartCreateRequest request)
+        {
+            try
+            {
+                var result = await _cartService.DeleteCart(request);
+                if (result == 0)
+                {
+                    return BadRequest(result);
+                }
+                return Ok(result);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> Update([FromBody] CartUpdateRequest request)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+                var result = await _cartService.UpdateCartAsync(request);
+
+                if (result == 0)
+                {
+                    return BadRequest();
+                }
+
+                return Ok(result);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+        [HttpGet("{userId}")]
+        public async Task<IActionResult> CheckOut(Guid userId)
+        {
+            try
+            {
+                var result = await _cartService.CheckOut(userId);
+                return Ok(result);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using ShoesHouse.ApiIntegration.InterfacesClient;
+using ShoesHouse.ViewModels.Requests.Cart;
 using ShoesHouse.ViewModels.Requests.Order;
 using ShoesHouse.ViewModels.ViewModels;
 using System;
@@ -14,11 +15,13 @@ namespace ShoesHouse.AdminApp.Controllers
     {
         private readonly IOrderApiClient _orderApiClient;
         private readonly IUserApiClient _userApiClient;
+        private readonly ICartApiClient _cartApiClient;
 
-        public OrderController(IOrderApiClient orderApiClient, IUserApiClient userApiClient)
+        public OrderController(ICartApiClient cartApiClient, IOrderApiClient orderApiClient, IUserApiClient userApiClient)
         {
             _orderApiClient = orderApiClient;
             _userApiClient = userApiClient;
+            _cartApiClient = cartApiClient;
         }
 
         public async Task<IActionResult> Index()
@@ -161,5 +164,6 @@ namespace ShoesHouse.AdminApp.Controllers
             }
             return RedirectToAction("Update", new { id = request.Id });
         }
+
     }
 }

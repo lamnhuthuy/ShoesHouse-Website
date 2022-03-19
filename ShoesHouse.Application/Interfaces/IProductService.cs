@@ -23,5 +23,10 @@ namespace ShoesHouse.Application.Interfaces
         Task<PagedResult<ProductViewModel>> GetAllPagingAsync(GetProductPagingRequest request);
 
         Task<List<ProductViewModel>> GetLatestProduct();
+
+        Task<int> AddComment(int idproduct, string comment, Guid user);
+
+        Task<List<ProductViewModel>> GetBackToSchool();
+        Task<List<ProductViewModel>> GetBestChoice();
     }
 }

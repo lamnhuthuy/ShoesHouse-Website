@@ -43,6 +43,20 @@ namespace ShoesHouse.ApiIntegration.ServicesClient
             return 0;
         }
 
+        public async Task<int> CheckOut(Guid id)
+        {
+            var sessions = _httpContextAccessor.HttpContext.Session.GetString(SystemConstants.AppSettings.Token);
+            var client = _httpClientFactory.CreateClient();
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessions);
+            client.BaseAddress = new Uri(_config["BaseAddress"]);
+            var response = await client.GetAsync($"/api/Cart/{id}");
+            if (response.IsSuccessStatusCode)
+            {
+                return JsonConvert.DeserializeObject<int>(await response.Content.ReadAsStringAsync());
+            }
+            return 0;
+        }
+
         public async Task<int> Create(CartCreateRequest request)
         {
             var sessions = _httpContextAccessor.HttpContext.Session.GetString(SystemConstants.AppSettings.Token);
@@ -59,6 +73,24 @@ namespace ShoesHouse.ApiIntegration.ServicesClient
             return 0;
         }
 
+        public async Task<bool> DeleteCartAsync(CartCreateRequest request)
+        {
+            var sessions = _httpContextAccessor.HttpContext.Session.GetString(SystemConstants.AppSettings.Token);
+            var client = _httpClientFactory.CreateClient();
+            var json = JsonConvert.SerializeObject(request);
+            var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
+            client.BaseAddress = new Uri(_config["BaseAddress"]);
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessions);
+            var response = await client.PostAsync($"/api/Cart/Delete", httpContent);
+            var body = await response.Content.ReadAsStringAsync();
+            if (response.IsSuccessStatusCode)
+            {
+                return JsonConvert.DeserializeObject<bool>(body);
+
+            }
+            return false;
+        }
+
         public async Task<List<CartViewModel>> GetAllByUserIdAsync(Guid id)
         {
             var sessions = _httpContextAccessor.HttpContext.Session.GetString(SystemConstants.AppSettings.Token);
@@ -72,6 +104,22 @@ namespace ShoesHouse.ApiIntegration.ServicesClient
                 return JsonConvert.DeserializeObject<List<CartViewModel>>(await response.Content.ReadAsStringAsync());
             }
             return null;
+        }
+
+        public async Task<bool> UpdateCartAsync(CartUpdateRequest request)
+        {
+            var sessions = _httpContextAccessor.HttpContext.Session.GetString(SystemConstants.AppSettings.Token);
+            var client = _httpClientFactory.CreateClient();
+            var json = JsonConvert.SerializeObject(request);
+            var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessions);
+            client.BaseAddress = new Uri(_config["BaseAddress"]);
+            var response = await client.PutAsync($"/api/Cart", httpContent);
+            if (response.IsSuccessStatusCode)
+            {
+                return JsonConvert.DeserializeObject<bool>(await response.Content.ReadAsStringAsync());
+            }
+            return false;
         }
     }
 }

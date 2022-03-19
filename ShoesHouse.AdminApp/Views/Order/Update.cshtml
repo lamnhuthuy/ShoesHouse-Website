@@ -27,7 +27,7 @@
                     </div>
                     <!-- /.card-header -->
                     <!-- form start -->
-                    <form asp-action="Update" asp-controller="Order" method="post">
+                    <form asp-action="Update" asp-controller="Order" method="post" onsubmit="return checksubmit()">
                         <div class="card-body">
                             <div class="form-group">
                                 <label asp-for="Id"></label>
@@ -51,12 +51,13 @@
                             </div>
                             <div class="form-group">
                                 <label asp-for="DeliveryDate"></label>
-                                <input class="form-control" asp-for="DeliveryDate">
+                                <input class="form-control" asp-for="DeliveryDate" id="delivery-date" onchange="validateDate()">
 
                             </div>
                             <div class="form-group">
                                 <label asp-for="DateCreated"></label>
-                                <input class="form-control" asp-for="DateCreated">
+                                <input class="form-control" asp-for="DateCreated" id="order-date" onchange="validateDate()">
+                                <div id="messError" class="text-danger mb-1">  </div>
                             </div>
 
                             <div class="form-group">
@@ -84,7 +85,7 @@
                                 @if (Model.OrderDetails != null)
                                 {
                                     @for (int i = 0; i < Model.OrderDetails.Count; i++)
-                                    {
+                                    {<input asp-for="@Model.OrderDetails[i].IdOrder" value="@Model.Id" hidden />
                                         <div class="row">
                                             <div class="col-5">
                                                 <div class="form-group">
@@ -94,8 +95,8 @@
                                             </div>
                                             <div class="col-5">
                                                 <div class="form-group">
-                                                    <label for="@Model.OrderDetails[i].IdProduct@Model.OrderDetails[i].Amount"></label>
-                                                    <input required type="number" class="form-control" id="@Model.OrderDetails[i].IdProduct@Model.OrderDetails[i].Amount" value="@Model.OrderDetails[i].Amount">
+                                                    <label for="@Model.OrderDetails[i].IdProduct@Model.OrderDetails[i].Amount" asp-for="@Model.OrderDetails[i].Amount"></label>
+                                                    <input required type="number" class="form-control" id="@Model.OrderDetails[i].IdProduct@Model.OrderDetails[i].Amount" value="@Model.OrderDetails[i].Amount" asp-for="@Model.OrderDetails[i].Amount" min="1" max="99">
                                                 </div>
                                             </div>
                                             <div class="col-2 d-flex align-items-end justify-content-between">
@@ -133,7 +134,7 @@
                             </div>
                             <div class="form-group">
                                 <label asp-for="Total"></label>
-                                <input class="form-control" asp-for="Total">
+                                <input class="form-control" asp-for="Total" id="total">
                             </div>
 
                         </div>
@@ -210,22 +211,27 @@
             return true;
         }
     }
-
-    function updateTotal(id_order, id_cake, amount) {
+    function onchangetotal(productID, UserId, amount) {
+        console.log(productID, UserId, amount);
+        var url = "/Order/ChangeTotal";
+        var input = {}
+        input.idproduct = productID;
+        input.amount = amount;
+        input.userid = UserId;
         const xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
                 var obj = JSON.parse(this.responseText);
-                if (obj.mes == true) {
-                    var input = document.getElementById("price");
-                    input.value = new Intl.NumberFormat().format(parseInt(obj.total)) + " VND";
+                if (obj.issucess) {
+                    console.log(obj);
+                    var total = document.getElementById("total");
+                    total.innerText = ob
                 }
+
             }
         };
-        xhttp.open(
-            "GET", `<?= DOCUMENT_ROOT ?>/admin/Orders/getToTal?id_order=${id_order}&id_cake=${id_cake}&amount=${amount}`,
-            true
-        );
-        xhttp.send();
+        xhttp.open("POST", url);
+        xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+        xhttp.send(JSON.stringify(input));
     }
 </script>

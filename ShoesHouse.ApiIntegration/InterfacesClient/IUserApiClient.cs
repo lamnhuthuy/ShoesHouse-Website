@@ -15,5 +15,9 @@ namespace ShoesHouse.ApiIntegration.InterfacesClient
         Task<List<UserViewModel>> GetAllAsync();
 
         Task<UserViewModel> GetByIdAsync(Guid Id);
+
+        Task<ApiResult<string>> Register(RegisterRequest request);
+
+        Task<ApiResult<string>> Update(UserUpdateRequest request);
     }
 }

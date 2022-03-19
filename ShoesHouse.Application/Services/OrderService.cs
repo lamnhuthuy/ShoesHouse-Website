@@ -20,11 +20,13 @@ namespace ShoesHouse.Application.Services
     {
         private readonly ShoesHouseDbContext _context;
         private readonly IMapper _mapper;
+        private readonly IProductService _productService;
 
-        public OrderService(ShoesHouseDbContext context, IMapper mapper)
+        public OrderService(ShoesHouseDbContext context, IMapper mapper, IProductService productService)
         {
             _context = context;
             _mapper = mapper;
+            _productService = productService;
         }
 
         public async Task<int> CreateOrderAsync(OrderCreateRequest request)
@@ -184,8 +186,15 @@ namespace ShoesHouse.Application.Services
             order.DateCreated = request.DateCreated;
             order.DateModified = DateTime.Now;
             order.DeliveryDate = request.DeliveryDate;
-            order.Total = request.Total;
+            decimal total = 0;
 
+            foreach (var item in request.OrderDetails)
+            {
+                var product = await _productService.GetByIdAsync(item.IdProduct);
+                total = total + item.Amount * product.OriginalPrice;
+                await this.CreateOrderDetailsAsync(item);
+            }
+            order.Total = total;
             return await _context.SaveChangesAsync();
         }
 

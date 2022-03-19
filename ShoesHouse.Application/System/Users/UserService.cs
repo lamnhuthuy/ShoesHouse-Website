@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using ShoesHouse.Application.Interfaces;
 using ShoesHouse.Data.EF;
 using ShoesHouse.Data.Entities;
 using ShoesHouse.Utilities.Exceptions;
@@ -12,7 +14,9 @@ using ShoesHouse.ViewModels.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
+using System.IO;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,12 +31,14 @@ namespace ShoesHouse.Application.System.Users
         private readonly SignInManager<AppUser> _signInManager;
         private readonly RoleManager<AppRole> _roleManager;
         private readonly IMapper _mapper;
+        private readonly IStorageService _storageService;
         public UserService(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, IConfiguration config,
-            ShoesHouseDbContext context, RoleManager<AppRole> roleManager, IMapper mapper)
+            ShoesHouseDbContext context, RoleManager<AppRole> roleManager, IMapper mapper, IStorageService storageService)
         {
             _context = context;
             _config = config;
             _userManager = userManager;
+            _storageService = storageService;
             _signInManager = signInManager;
             _roleManager = roleManager;
             _mapper = mapper;
@@ -46,11 +52,14 @@ namespace ShoesHouse.Application.System.Users
             {
                 username = emailCheck.UserName;
             }
+            else
+            {
+                return new ApiErrorResult<string>("Tài khoản không tồn tại");
+            }
 
             var user = await _userManager.FindByEmailAsync(emailCheck.Email);
 
             if (user == null) return new ApiErrorResult<string>("Tài khoản không tồn tại");
-
             var result = await _signInManager.PasswordSignInAsync(user, request.Password, request.RememberMe, true);
             if (!result.Succeeded)
             {
@@ -119,5 +128,78 @@ namespace ShoesHouse.Application.System.Users
             };
             return userVm;
         }
+
+        public async Task<ApiResult<string>> Register(RegisterRequest request)
+        {
+            var user = await _userManager.FindByNameAsync(request.UserName);
+            if (user != null)
+            {
+                return new ApiErrorResult<string>("Tài khoản đã tồn tại");
+            }
+            if (await _userManager.FindByEmailAsync(request.Email) != null)
+            {
+                return new ApiErrorResult<string>("Emai đã tồn tại");
+            }
+
+            user = new AppUser()
+            {
+
+                Email = request.Email,
+                Address = request.Address,
+                UserName = request.UserName,
+                PhoneNumber = request.PhoneNumber,
+                Avatar = "default-avatar.png",
+                Name = request.UserName,
+
+            };
+            var result = await _userManager.CreateAsync(user, request.Password);
+            if (result.Succeeded)
+            {
+                return new ApiSuccessResult<string>("Thanh cong");
+            }
+            return new ApiErrorResult<string>("Đăng ký không thành công");
+        }
+
+        public async Task<ApiResult<string>> UpdateUser(UserUpdateRequest request)
+        {
+            var user = await _userManager.Users.AnyAsync(x => x.UserName == request.UserName && x.Id != request.Id);
+            if (user == true)
+            {
+                return new ApiErrorResult<string>("Tài khoản đã tồn tại");
+            }
+            var mail = await _userManager.Users.AnyAsync(x => x.Email == request.Email && x.Id != request.Id);
+            if (mail == true)
+            {
+                return new ApiErrorResult<string>("Emai đã tồn tại");
+            }
+            var usr = await _userManager.FindByIdAsync(request.Id.ToString());
+            usr.Name = request.UserName;
+            usr.Address = request.Address;
+            usr.Email = request.Email;
+            usr.PhoneNumber = request.PhoneNumber;
+            if (request.fileName != null && usr.Avatar != "default-avatar.png")
+            {
+                _storageService.DeleteFileAsync(usr.Avatar);
+                usr.Avatar = await this.SaveFile(request.fileName);
+            }
+            else if (request.fileName != null && usr.Avatar == "default-avatar.png")
+            {
+                usr.Avatar = await this.SaveFile(request.fileName);
+            }
+            var result = await _userManager.UpdateAsync(usr);
+            if (result.Succeeded)
+            {
+                return new ApiSuccessResult<string>("Cap nhat thanh cong");
+            }
+            return new ApiErrorResult<string>("Cập nhật không thành công");
+        }
+        private async Task<string> SaveFile(IFormFile file)
+        {
+            var originalFileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
+            var fileName = $"{Guid.NewGuid()}{Path.GetExtension(originalFileName)}";
+            await _storageService.SaveFileAsync(file.OpenReadStream(), fileName);
+            return fileName;
+        }
     }
 }
+

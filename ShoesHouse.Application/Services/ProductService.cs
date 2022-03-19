@@ -32,6 +32,21 @@ namespace ShoesHouse.Application.Services
             _storageService = storageService;
         }
 
+        public async Task<int> AddComment(int idproduct, string content, Guid user)
+        {
+            var comment = new Comment()
+            {
+                UserId = user,
+                ProductId = idproduct,
+                content = content,
+                DateCreated = DateTime.Now,
+            };
+            await _context.Comments.AddAsync(comment);
+            await _context.SaveChangesAsync();
+            return comment.Id;
+
+        }
+
         public async Task<int> CreateAsync(ProductCreateRequest request)
         {
             var product = new Product()
@@ -142,6 +157,42 @@ namespace ShoesHouse.Application.Services
             return pagedResult;
         }
 
+        public async Task<List<ProductViewModel>> GetBackToSchool()
+        {
+            return await _context.Products.Include(x => x.ProductImages).Include(x => x.Category).Where(x => x.Note.Contains("School")).Select(product => new ProductViewModel()
+            {
+                Id = product.Id,
+                Name = product.Name,
+                OriginalPrice = product.OriginalPrice,
+                Size = product.Size,
+                CategoryName = product.Category.Name,
+                ProductImages = _mapper.Map<List<ProductImageViewModel>>(product.ProductImages),
+                DateModified = product.DateModified,
+                DateCreated = product.DateCreated,
+                Description = product.Description,
+                CategoryId = product.CategoryId,
+                Stock = product.Stock
+            }).ToListAsync();
+        }
+
+        public async Task<List<ProductViewModel>> GetBestChoice()
+        {
+            return await _context.Products.Include(x => x.ProductImages).Include(x => x.Category).Where(x => x.Note.Contains("Collection")).Select(product => new ProductViewModel()
+            {
+                Id = product.Id,
+                Name = product.Name,
+                OriginalPrice = product.OriginalPrice,
+                Size = product.Size,
+                CategoryName = product.Category.Name,
+                ProductImages = _mapper.Map<List<ProductImageViewModel>>(product.ProductImages),
+                DateModified = product.DateModified,
+                DateCreated = product.DateCreated,
+                Description = product.Description,
+                CategoryId = product.CategoryId,
+                Stock = product.Stock
+            }).ToListAsync();
+        }
+
         public async Task<ProductViewModel> GetByIdAsync(int productId)
         {
             var product = await _context.Products.Include(x => x.Category).Include(x => x.ProductImages).Include(x => x.Comments).ThenInclude(Comment => Comment.User).Where(product => product.Id == productId).FirstOrDefaultAsync();
@@ -151,6 +202,7 @@ namespace ShoesHouse.Application.Services
             }
             var productVm = new ProductViewModel()
             {
+                CategoryName = product.Category.Name,
                 CategoryId = product.CategoryId,
                 Stock = product.Stock,
                 Id = product.Id,

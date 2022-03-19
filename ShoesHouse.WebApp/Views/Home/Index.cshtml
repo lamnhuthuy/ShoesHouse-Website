@@ -1,4 +1,7 @@
 ﻿@model HomeViewModel
+@{
+    string id = User.Identity.IsAuthenticated ? User.Claims.Where(x => x.Type == "Id").FirstOrDefault().Value.ToString() : "0";
+}
 <div class="container banner">
     <svg width="34"
          height="35"
@@ -50,7 +53,7 @@
                             </p>
                         </div>
                     </div>
-                    <button class="btn release-btn"> Add to basket </button>
+                    <button onclick='addToCart(@item.Id, "@id")' class="btn release-btn"> Add to basket </button>
                 </div>
             }
         </div>
@@ -65,18 +68,19 @@
                 <p class="description-detail">
                     Nike has been established for a long time, and because of that it is embedded in alot of peoples subconscious. In the 80’s, NIKE made the genius decision to make Micheal Jordan the face of its brand. Micheal Jordan represents alot of things to people. A sort of rags to riches lifestyle, a thought that people can become anything despite their circumstances, and he kind of just represents a master of his craft, all things people would like to embody in their own lives.
                 </p>
-                <a href="#/" class="exp">
+                <a href="https://www.nike.com/vn/" class="exp" target="_blank">
                     <button class="description-btn">+</button>
                     <p class="explore">Explore here</p>
                 </a>
             </div>
             <img src="/image/boots-181744.jpg" alt="" class="des2 des-img">
             <div class="description-name2">
-                <h4 class="description-title">Why choose <span> NIKE</span></h4>
+                <h4 class="description-title"><span>Adidas</span> is the Badge of Sport</h4>
                 <p class="description-detail">
-                    Nike has been established for a long time, and because of that it is embedded in alot of peoples subconscious. In the 80’s, NIKE made the genius decision to make Micheal Jordan the face of its brand. Micheal Jordan represents alot of things to people. A sort of rags to riches lifestyle, a thought that people can become anything despite their circumstances, and he kind of just represents a master of his craft, all things people would like to embody in their own lives.
+                    It is Adidas’ goal to be the foremost athletic brand in the world. Therefore, everything they do is rooted in sports. The brand mark, according to Adidas, “Is the sharp end of our spear, seen on innovative products, as well as with the world’s best athletes, teams, and events.”
+                    This commitment began with Adidas’ founder Adi Dassler. His motivation was to make all athletes perform better in the sport of their choice. Adidas continues to focus on athletes and have carried through with Dassler’s wishes to make Adidas the perfect shoe choice for every athlete.
                 </p>
-                <a href="#/" class="exp">
+                <a href="https://www.adidas.com.vn/vi" class="exp" target="_blank">
                     <button class="description-btn">+</button>
                     <p class="explore">Explore here</p>
                 </a>
@@ -124,65 +128,29 @@
             <div class="trending-item">
                 <div class="trending-item-overlay">
                     <div class="trending-item-all">
-                        <div class="trending-item-all1">
-                            <img src="img/balance1.jpg" alt="">
-                            <p class="item1-name">Kith new balance RC 1300 "Kith - 10th Anniversary - Beige"</p>
-                            <p class="price">2.245.000 VND</p>
-                            <button class="btn trending-btn"><i class="fas fa-cart-plus"></i></button>
-                        </div>
-                        <div class="trending-item-all1">
-                            <img src="img/balance2.jpg" alt="">
-                            <p class="item1-name">Kith new balance RC 1300 "Kith - 10th Anniversary - Beige"</p>
-                            <p class="price">2.245.000 VND</p>
-                            <button class="btn trending-btn"><i class="fas fa-cart-plus"></i></button>
-                        </div>
-                        <div class="trending-item-all1">
-                            <img src="img/balance3.jpg" alt="">
-                            <p class="item1-name">Kith new balance RC 1300 "Kith - 10th Anniversary - Beige"</p>
-                            <p class="price">2.245.000 VND</p>
-                            <button class="btn trending-btn"><i class="fas fa-cart-plus"></i></button>
-                        </div>
+                        @for (int i = 0; i < 3; i++)
+                        {
+                            <div class="trending-item-all1">
+                                <img src="@(SystemConstants.AppSettings.ImageUrl)/@Model.Collection[i].ProductImages.FirstOrDefault().FileName" alt="">
+                                <p class="item1-name">Kith new balance RC 1300 "Kith - 10th Anniversary - Beige"</p>
+                                <p class="price">@Model.Collection[i].OriginalPrice.ToVND()</p>
+                                <button onclick='addToCart(@Model.Collection[i].Id, "@id")' class="btn trending-btn"><i class="fas fa-cart-plus"></i></button>
+                            </div>
+                        }
+
                     </div>
                     <div class="trending-item-all">
-                        <div class="trending-item-all1">
-                            <img src="img/balance1.jpg" alt="">
-                            <p class="item1-name">Kith new balance RC 1300 "Kith - 10th Anniversary - Beige"</p>
-                            <p class="price">2.245.000 VND</p>
-                            <button class="btn trending-btn"><i class="fas fa-cart-plus"></i></button>
-                        </div>
-                        <div class="trending-item-all1">
-                            <img src="img/balance2.jpg" alt="">
-                            <p class="item1-name">Kith new balance RC 1300 "Kith - 10th Anniversary - Beige"</p>
-                            <p class="price">2.245.000 VND</p>
-                            <button class="btn trending-btn"><i class="fas fa-cart-plus"></i></button>
-                        </div>
-                        <div class="trending-item-all1">
-                            <img src="img/balance3.jpg" alt="">
-                            <p class="item1-name">Kith new balance RC 1300 "Kith - 10th Anniversary - Beige"</p>
-                            <p class="price">2.245.000 VND</p>
-                            <button class="btn trending-btn"><i class="fas fa-cart-plus"></i></button>
-                        </div>
+                        @for (int i = 3; i < Model.Collection.Count(); i++)
+                        {
+                            <div class="trending-item-all1">
+                                <img src="@(SystemConstants.AppSettings.ImageUrl)/@Model.Collection[i].ProductImages.FirstOrDefault().FileName" alt="">
+                                <p class="item1-name">Kith new balance RC 1300 "Kith - 10th Anniversary - Beige"</p>
+                                <p class="price">2.245.000 VND</p>
+                                <button onclick='addToCart(@Model.Collection[i].Id, "@id")' class="btn trending-btn"><i class="fas fa-cart-plus"></i></button>
+                            </div>
+                        }
                     </div>
-                    <div class="trending-item-all">
-                        <div class="trending-item-all1">
-                            <img src="img/balance1.jpg" alt="">
-                            <p class="item1-name">Kith new balance RC 1300 "Kith - 10th Anniversary - Beige"</p>
-                            <p class="price">2.245.000 VND</p>
-                            <button class="btn trending-btn"><i class="fas fa-cart-plus"></i></button>
-                        </div>
-                        <div class="trending-item-all1">
-                            <img src="img/balance2.jpg" alt="">
-                            <p class="item1-name">Kith new balance RC 1300 "Kith - 10th Anniversary - Beige"</p>
-                            <p class="price">2.245.000 VND</p>
-                            <button class="btn trending-btn"><i class="fas fa-cart-plus"></i></button>
-                        </div>
-                        <div class="trending-item-all1">
-                            <img src="img/balance3.jpg" alt="">
-                            <p class="item1-name">Kith new balance RC 1300 "Kith - 10th Anniversary - Beige"</p>
-                            <p class="price">2.245.000 VND</p>
-                            <button class="btn trending-btn"><i class="fas fa-cart-plus"></i></button>
-                        </div>
-                    </div>
+
                 </div>
             </div>
         </div>
@@ -192,54 +160,22 @@
     <div class="school">
         <h3 class="title trending-school">Back To <span>School </span> </h3>
         <div class="school-list">
-            <div class="school-item">
-                <div class="school-info">
-                    <p class="item1-name">Kith new balance"</p>
-                    <div>
-                        <p class="price">2.000.000 VND</p>
-                        <p class="size">S14</p>
-                        <div class="circle blue"></div>
+            @foreach (var item in Model.BackToSchool)
+            {
+                <div class="school-item">
+                    <div class="school-info">
+                        <p class="item1-name">@item.Name</p>
+                        <div>
+                            <p class="price">@item.OriginalPrice.ToVND()</p>
+                            <p class="size">S14</p>
+                            <div class="circle black"></div>
+                        </div>
+                        <button onclick='addToCart(@item.Id, "@id")' class="btn release-btn ">Add to basket</button>
                     </div>
-                    <button class="btn release-btn ">Add to basket</button>
+                    <img src="@(SystemConstants.AppSettings.ImageUrl)/@item.ProductImages.Skip(1).FirstOrDefault().FileName" alt="shoes-image">
                 </div>
-                <img src="img/nike4.jpg" alt="shoes-image">
-            </div>
-            <div class="school-item">
-                <div class="school-info">
-                    <p class="item1-name">Kith new balance RC 1300 "Kith - 10th Anniversary - Beige"</p>
-                    <div>
-                        <p class="price">2.000.000 VND</p>
-                        <p class="size">S14</p>
-                        <div class="circle blue"></div>
-                    </div>
-                    <button class="btn release-btn">Add to basket</button>
-                </div>
-                <img src="img/nike6.jpg" alt="shoes-image">
-            </div>
-            <div class="school-item">
-                <div class="school-info">
-                    <p class="item1-name">Kith new balance RC 1300 "Kith - 10th Anniversary - Beige"</p>
-                    <div>
-                        <p class="price">2.000.000 VND</p>
-                        <p class="size">S14</p>
-                        <div class="circle blue"></div>
-                    </div>
-                    <button class="btn release-btn">Add to basket</button>
-                </div>
-                <img src="img/nike7.jpg" alt="shoes-image">
-            </div>
-            <div class="school-item">
-                <div class="school-info">
-                    <p class="item1-name">Kith new balance RC 1300 "Kith - 10th Anniversary - Beige"</p>
-                    <div>
-                        <p class="price">2.000.000 VND</p>
-                        <p class="size">S14</p>
-                        <div class="circle blue"></div>
-                    </div>
-                    <button class="btn release-btn">Add to basket</button>
-                </div>
-                <img src="img/nike8.jpg" alt="shoes-image">
-            </div>
+            }
+
         </div>
     </div>
 </div>
@@ -250,7 +186,9 @@
             @foreach (var item in Model.Products.Items)
             {
                 <div class="release-item1">
-                    <img style="border-radius:20px" src="@(SystemConstants.AppSettings.ImageUrl)/@item.ProductImages.FirstOrDefault().FileName" alt="">
+                    <a asp-action="Detail" asp-controller="Product" asp-route-id="@item.Id">
+                        <img style="border-radius:20px" src="@(SystemConstants.AppSettings.ImageUrl)/@item.ProductImages.FirstOrDefault().FileName" alt="">
+                    </a>
                     <div class="item1-info">
                         <p class="item1-name">@item.Name</p>
                         <p class="price">@item.OriginalPrice.ToVND()</p>
@@ -264,9 +202,6 @@
                                 </div>
                             </p>
                         </div>
-                        @{
-                            string id = User.Identity.IsAuthenticated ? User.Claims.Where(x => x.Type == "Id").FirstOrDefault().Value.ToString() : "0";
-                        }
                         <button onclick='addToCart(@item.Id, "@id")' class="btn release-btn"> Add to basket </button>
                     </div>
                 </div>

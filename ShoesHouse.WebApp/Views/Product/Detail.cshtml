@@ -1,0 +1,146 @@
+﻿@model ProductViewModel
+<div class="container detail ">
+    <h3 class="detail-title">Chi tiết sản phẩm</h3>
+    <div class="cake-detail">
+        <div class="cake-detail-img">
+            <div class="img1">
+                <img src="@(SystemConstants.AppSettings.ImageUrl)/@Model.ProductImages.FirstOrDefault().FileName" alt="" class="current-img" />
+            </div>
+            <div class="img-diff">
+                @foreach (var item in Model.ProductImages)
+                {
+                    <img src="@(SystemConstants.AppSettings.ImageUrl)/@item.FileName" />
+                }
+            </div>
+        </div>
+        <div class="cake-detail-content">
+            <h6 class="footer-name">@Model.Name</h6>
+            <p class="item1-name"><b> Type:</b> @Model.CategoryName</p>
+            <p class="item1-name"><b> Size:</b> @Model.Size cm</p>
+            <p class="item1-name"><b>Description:</b></p>
+            <p class="cake-detail-content-id">
+                @Model.Description
+            </p>
+            <p class="new-price">@Model.OriginalPrice.ToVND()</p>
+            @{
+                string id = User.Identity.IsAuthenticated ? User.Claims.Where(x => x.Type == "Id").FirstOrDefault().Value.ToString() : "0";
+                var product = Model.Id;
+            }
+            <button onclick='addToCart(@product, "@id")' class="btn btn-primary">Add to cart +</button>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <h3 class="detail-title">Product Reviews</h3>
+    <div class="comment">
+        <div class="comment-list">
+            @if (Model.Comments.Count() > 0)
+            {
+                @foreach (var item in Model.Comments)
+                {
+                    <div class="comment-user">
+                        <img src="@(SystemConstants.AppSettings.ImageUrl)/@item.UserAvatar" alt="" class="comment-img-user" />
+                        <div class="comment-item">
+                            <div class="comment-content">
+                                <p class="comment-name">@item.UserName</p>
+                                <p class="comment-content-value">@item.Content</p>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+
+
+            }
+            else
+            {
+                <p class="cart2-title" id="no-comment">No comments</p>
+            }
+
+
+        </div>
+
+        @if (User.Identity.IsAuthenticated)
+        {
+            string name = User.Claims.Where(x => x.Type == "UserName").FirstOrDefault().Value;
+            string avt = User.Claims.Where(x => x.Type == "Avartar").FirstOrDefault().Value;
+            <div class="comment-add">
+                <img src="@(SystemConstants.AppSettings.ImageUrl)/@avt" alt="" class="comment-img-user" id="comment-img-user" />
+                <div class="comment-add-input">
+                    <input type="text" id="comment-add" placeholder="Add to comment" />
+                    <button class="comment-btn" onclick="addComment(@Model.Id)">Send</button>
+                </div>
+            </div>
+            <p hidden id="comment-name">@name</p>
+        }
+
+
+
+    </div>
+</div>
+
+<script>
+    var images = document.querySelector(".img-diff").children;
+    images[0].classList.add("active-img");
+    for (let index = 0; index < images.length; index++) {
+        images[index].onclick = function (e) {
+            let src = e.target.getAttribute("src");
+            let currentImg = document.querySelector(".current-img");
+            currentImg.setAttribute("src", src);
+            createBorder(index);
+        };
+    }
+
+    function createBorder(num) {
+        var currentBorder = document.querySelector(".active-img");
+        currentBorder.classList.remove("active-img");
+        images[num].classList.add("active-img");
+    }
+    function add() {
+        var inputVal = document.getElementById("comment-add");
+        var name = document.getElementById("comment-name").innerHTML;
+        var imgsrc = document.getElementById("comment-img-user").src;
+        if (document.getElementById("no-comment") != null) {
+            document.getElementById("no-comment").style.display = "none";
+        }
+        if (inputVal.value !== "") {
+            var item = document.createElement("div");
+            item.classList.add("comment-user");
+            item.innerHTML = `<img src="${imgsrc}" alt="" class="comment-img-user" />
+    <div class="comment-item">
+      <div class="comment-content">
+        <p class="comment-name">${name}</p>
+        <p class="comment-content-value">${inputVal.value}.</p>
+      </div>
+    </div>`;
+            document.querySelector(".comment-list").appendChild(item);
+            inputVal.value = "";
+        }
+    }
+    function addComment(id) {
+        var inputValue = document.getElementById("comment-add");
+        if (inputValue.value != "") {
+            const xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    var obj = JSON.parse(this.responseText);
+                    if (obj.issucess == true) {
+                        add();
+                        toast({
+                            title: "Successfully.",
+                            message: "Comments added successfully.",
+                            type: "success",
+                            duration: 2000,
+                        });
+                    }
+                }
+            };
+            xhttp.open(
+                "GET",
+                `/Product/AddComment?id=${id}&comment=${inputValue.value}`,
+                true
+            );
+            xhttp.send();
+        }
+    }
+</script>

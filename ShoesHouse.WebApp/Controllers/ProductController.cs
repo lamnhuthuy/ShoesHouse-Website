@@ -35,7 +35,24 @@ namespace ShoesHouse.WebApp.Controllers
             };
 
             return View(viewModel);
-
+        }
+        [HttpGet]
+        public async Task<IActionResult> Detail(int id)
+        {
+            var product = await _productService.GetByIdAsync(id);
+            return View(product);
+        }
+        [HttpGet]
+        public async Task<JsonResult> AddComment([FromQuery] int id, [FromQuery] string comment)
+        {
+            var userId = User.Claims.Where(x => x.Type == "Id").FirstOrDefault().Value;
+            Guid user = Guid.Parse(userId);
+            var result = await _productService.AddComment(id, comment, user);
+            if (result != 0)
+            {
+                return Json(new { issucess = true });
+            }
+            return Json(new { issucess = true });
         }
     }
 }

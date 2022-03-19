@@ -47,6 +47,7 @@ namespace ShoesHouse.AdminApp
                 builder.AddRazorRuntimeCompilation();
             }
             //declare DI
+            services.AddTransient<ICartApiClient, CartApiClient>();
             services.AddTransient<IUserApiClient, UserApiClient>();
             services.AddTransient<ICategoryService, CategoryApiClient>();
             services.AddTransient<IProductService, ProductApiClient>();

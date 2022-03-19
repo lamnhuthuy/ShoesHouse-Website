@@ -17,5 +17,9 @@ namespace ShoesHouse.Application.Interfaces
 
         Task<int> DeleteCart(CartCreateRequest request);
 
+        Task<int> UpdateCartAsync(CartUpdateRequest request);
+
+        Task<int> CheckOut(Guid userId);
+
     }
 }

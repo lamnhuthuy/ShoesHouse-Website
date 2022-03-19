@@ -11,5 +11,8 @@ namespace ShoesHouse.WebApp.Models
     {
         public PagedResult<ProductViewModel> Products { get; set; }
         public List<ProductViewModel> LatestProduct { get; set; }
+
+        public List<ProductViewModel> BackToSchool { get; set; }
+        public List<ProductViewModel> Collection { get; set; }
     }
 }

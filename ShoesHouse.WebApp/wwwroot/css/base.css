@@ -34,6 +34,7 @@ html {
     box-sizing: border-box;
     font-family: var(--font-poppins);
     color: var(--color-title);
+    scroll-behavior: smooth;
 }
 
 body {
@@ -123,5 +124,9 @@ svg circle {
 
 .margin-top {
     margin-top: 90px;
-    margin-bottom: 50px;
+    margin-bottom: 120px;
+}
+
+.error {
+    color: red;
 }

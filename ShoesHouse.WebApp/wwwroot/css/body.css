@@ -139,7 +139,7 @@
 }
 
 .des-img {
-    border-radius: 10px;
+    border-radius: 20px;
 }
 
 .description-info {
@@ -182,6 +182,12 @@
 .description-detail {
     line-height: 2.2rem;
     color: var(--primary-content);
+    overflow: hidden;
+    -webkit-line-clamp: 6;
+    -webkit-box-orient: vertical;
+    display: -webkit-box;
+    font-family: var(--font-nunito);
+    font-size: 1.9rem;
 }
 
 .exp {
@@ -253,6 +259,7 @@
 
 .trending-item-all img {
     width: 100%;
+    border-radius: 20px;
 }
 
 .trending-item1-title {
@@ -441,6 +448,7 @@
     font-size: 2.5rem;
     font-weight: bold;
     margin-bottom: 10px;
+    line-height: 3rem;
 }
 
 .footer-content1 {

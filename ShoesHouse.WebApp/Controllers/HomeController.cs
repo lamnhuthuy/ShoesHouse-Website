@@ -31,10 +31,30 @@ namespace ShoesHouse.WebApp.Controllers
             request.PageIndex = request.PageIndex > 0 ? request.PageIndex : 1;
             var latestProduct = await _productService.GetLatestProductAsync();
             var data = await _productService.GetAllPagingAsync(request);
+            var backtoschool = await _productService.GetBackToSchool();
+            var collection = await _productService.GetBestChoice();
+            if (TempData["orderCart"] != null)
+            {
+                if (TempData["orderCart"].ToString() == "true")
+                {
+                    ViewBag.message = "cartOrder";
+
+                }
+            }
+            if (TempData["updateuser"] != null)
+            {
+                if (TempData["updateuser"].ToString() == "true")
+                {
+                    ViewBag.message = "updateuser";
+
+                }
+            }
             var homeVm = new HomeViewModel()
             {
                 LatestProduct = latestProduct,
                 Products = data,
+                BackToSchool = backtoschool,
+                Collection = collection,
             };
             return View(homeVm);
         }

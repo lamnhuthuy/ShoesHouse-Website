@@ -15,5 +15,9 @@ namespace ShoesHouse.Application.System.Users
         Task<List<UserViewModel>> GetAllAsync();
 
         Task<UserViewModel> GetByIdAsync(Guid Id);
+
+        Task<ApiResult<string>> Register(RegisterRequest request);
+
+        Task<ApiResult<string>> UpdateUser(UserUpdateRequest request);
     }
 }

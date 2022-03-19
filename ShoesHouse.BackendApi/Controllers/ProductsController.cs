@@ -28,6 +28,20 @@ namespace ShoesHouse.BackendApi.Controllers
             var products = await _productService.GetAllAsync();
             return Ok(products);
         }
+        [HttpGet("BackToSchool")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetBackToSchool()
+        {
+            var products = await _productService.GetBackToSchool();
+            return Ok(products);
+        }
+        [HttpGet("Collection")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetCollection()
+        {
+            var products = await _productService.GetBestChoice();
+            return Ok(products);
+        }
         [HttpPost]
         [Consumes("multipart/form-data")]
         public async Task<IActionResult> Create([FromForm] ProductCreateRequest request)
@@ -119,6 +133,20 @@ namespace ShoesHouse.BackendApi.Controllers
             try
             {
                 var data = await _productService.GetLatestProduct();
+                return Ok(data);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+        [HttpGet("{id}/{comment}/{user}")]
+        [AllowAnonymous]
+        public async Task<IActionResult> AddComment(int id, string comment, Guid user)
+        {
+            try
+            {
+                var data = await _productService.AddComment(id, comment, user);
                 return Ok(data);
             }
             catch (Exception e)

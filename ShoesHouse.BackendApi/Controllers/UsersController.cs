@@ -61,5 +61,44 @@ namespace ShoesHouse.BackendApi.Controllers
                 return BadRequest(e.Message);
             }
         }
+        [HttpPost("Register")]
+        [AllowAnonymous]
+        public async Task<IActionResult> Register([FromBody] RegisterRequest request)
+        {
+
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var result = await _userService.Register(request);
+            if (!result.IsSuccessed)
+            {
+                return BadRequest(result);
+            }
+            return Ok(result);
+        }
+        [HttpPut]
+        [AllowAnonymous]
+        public async Task<IActionResult> Update([FromForm] UserUpdateRequest request)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+                var result = await _userService.UpdateUser(request);
+
+                if (!result.IsSuccessed)
+                {
+                    return BadRequest(result);
+                }
+                return Ok(result);
+
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            };
+        }
     }
 }

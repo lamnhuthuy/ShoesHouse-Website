@@ -1,0 +1,106 @@
+﻿@model UserUpdateRequest
+<div class="container detail ">
+    <h3 class="detail-title">Profile</h3>
+    <form class="profile" asp-action="Index" asp-controller="Account" method="post" enctype="multipart/form-data">
+        <div class="profile-info">
+            <div class="profile-info-name">
+                <label asp-for="UserName"></label>
+                <input type="text" asp-for="UserName" />
+            </div>
+            <span class="error" asp-validation-for="UserName"></span>
+            <div class="profile-info-name">
+                <label asp-for="Email"></label>
+                <input type="email" asp-for="Email" />
+            </div>
+            <span class="error" asp-validation-for="Email"></span>
+            <div class="profile-info-name">
+                <label asp-for="PhoneNumber"></label>
+                <input type="text" asp-for="PhoneNumber" />
+            </div>
+            <span class="error" asp-validation-for="PhoneNumber"></span>
+            <div class="profile-info-name">
+                <label asp-for="Address"></label>
+                <input asp-for="Address" />
+            </div>
+            <div class="error" asp-validation-summary="ModelOnly"></div>
+            <input type="submit" class="btn btn-primary" value="Save">
+        </div>
+        <div class="profile-image">
+            <div class="profile-overlay"></div>
+            <p class="cart2-title">Avatar Customer</p>
+            <div class="profile-image-cover">
+                <label for="p-img">
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        string avt = User.Claims.Where(x => x.Type == "Avartar").FirstOrDefault().Value;
+                        <img src="@(SystemConstants.AppSettings.ImageUrl)/@avt" id="profile-image" />
+                    }
+
+                </label>
+                <label for="p-img">
+                    <div class="profile-camera">
+                        <i class="fas fa-camera"></i>
+                    </div>
+                </label>
+            </div>
+            <p class="profile-image-name">Lam Nhut Huy</p>
+            <label asp-for="fileName" class="btn btn-primary"></label>
+            <input type="file" asp-for="fileName" onchange="readURL(this)" />
+        </div>
+    </form>
+    <h3 class="detail-title">History</h3>
+    <div class="history">
+        <div class="history-list">
+            @foreach (var item in ViewBag.order)
+            {
+                <div class="history-list-item">
+                    <p class="cart2-title cart2-title-border">Bill ID: @item.Id</p>
+                    <div class="history-item-all">
+                        @foreach (var detail in item.OrderDetails)
+                        {
+                            <div class="history-list-item-content">
+                                <img src="@(SystemConstants.AppSettings.ImageUrl)/@detail.FileName"
+                                     alt=""
+                                     class="cart1-conatain-img" />
+                                <div class="cart-detail">
+                                    <p class="cart-detail-name history-item-title">
+                                        @detail.ProductName
+                                    </p>
+                                    <p class="cart-detail-name history-item-title">Size: @detail.Size</p>
+                                    <p class=" cart-detail-name cart-detail-name-color history-item-title">
+                                        Price:@(((decimal)detail.OriginalPrice).ToVND())
+                                    </p>
+                                    <p class="cart-detail-name history-item-title">Quantity:@detail.Amount </p>
+                                </div>
+                            </div>
+                        }
+                        <p class="history-item-all-total">
+                            Total:
+                            <span class="total">@(((decimal)item.Total).ToVND()) </span>
+                        </p>
+                        <p class="history-item-all-total">
+                            Status:
+                            <span class="total"> @item.Status</span>
+                        </p>
+                    </div>
+                </div>
+            }
+
+
+        </div>
+    </div>
+</div>
+
+<script>
+    var img = document.getElementById("profile-image");
+    function readURL(input) {
+        if (input.files) {
+            var reader = new FileReader();
+            reader.readAsDataURL(input.files[0]);
+            reader.onload = function (e) {
+                img.src = e.target.result;
+            };
+        }
+    }
+</script>
+</html>

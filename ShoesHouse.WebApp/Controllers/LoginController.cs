@@ -84,8 +84,29 @@ namespace ShoesHouse.AdminApp.Controllers
             validationParameters.IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Tokens:Key"]));
 
             ClaimsPrincipal principal = new JwtSecurityTokenHandler().ValidateToken(jwtToken, validationParameters, out validatedToken);
-
             return principal;
+        }
+        [HttpGet]
+        public async Task<IActionResult> Register()
+        {
+            return View();
+
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Register(RegisterRequest request)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(request);
+            }
+            var result = await _userApiClient.Register(request);
+            if (result.ResultObj == null)
+            {
+                ModelState.AddModelError("", result.Message);
+                return View();
+            }
+            return RedirectToAction("Index", "Login");
         }
     }
 }

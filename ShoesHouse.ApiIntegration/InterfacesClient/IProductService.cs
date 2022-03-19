@@ -22,5 +22,8 @@ namespace ShoesHouse.ApiIntegration.InterfacesClient
         Task<List<ProductViewModel>> GetLatestProductAsync();
 
         Task<PagedResult<ProductViewModel>> GetAllPagingAsync(GetProductPagingRequest request);
+        Task<int> AddComment(int id, string comment, Guid user);
+        Task<List<ProductViewModel>> GetBackToSchool();
+        Task<List<ProductViewModel>> GetBestChoice();
     }
 }

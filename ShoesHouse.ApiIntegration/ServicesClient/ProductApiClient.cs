@@ -30,6 +30,22 @@ namespace ShoesHouse.ApiIntegration.ServicesClient
             _httpContextAccessor = httpContextAccessor;
         }
 
+        public async Task<int> AddComment(int id, string comment, Guid user)
+        {
+            var sessions = _httpContextAccessor.HttpContext.Session.GetString(SystemConstants.AppSettings.Token);
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_config["BaseAddress"]);
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", sessions);
+            var response = await client.GetAsync($"/api/Products/{id}/{comment}/{user}");
+            var body = await response.Content.ReadAsStringAsync();
+            if (response.IsSuccessStatusCode)
+            {
+                return JsonConvert.DeserializeObject<int>(body);
+
+            }
+            return 0;
+        }
+
         public async Task<bool> CreateProductAsync(ProductCreateRequest request)
         {
             var sessions = _httpContextAccessor.HttpContext.Session.GetString(SystemConstants.AppSettings.Token);
@@ -105,6 +121,32 @@ namespace ShoesHouse.ApiIntegration.ServicesClient
             }
 
             return JsonConvert.DeserializeObject<PagedResult<ProductViewModel>>(await response.Content.ReadAsStringAsync());
+        }
+
+        public async Task<List<ProductViewModel>> GetBackToSchool()
+        {
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_config["BaseAddress"]);
+            var response = await client.GetAsync("/api/Products/BackToSchool");
+            if (!response.IsSuccessStatusCode)
+            {
+                return null;
+            }
+
+            return JsonConvert.DeserializeObject<List<ProductViewModel>>(await response.Content.ReadAsStringAsync());
+        }
+
+        public async Task<List<ProductViewModel>> GetBestChoice()
+        {
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_config["BaseAddress"]);
+            var response = await client.GetAsync("/api/Products/Collection");
+            if (!response.IsSuccessStatusCode)
+            {
+                return null;
+            }
+
+            return JsonConvert.DeserializeObject<List<ProductViewModel>>(await response.Content.ReadAsStringAsync());
         }
 
         public async Task<ProductViewModel> GetByIdAsync(int productId)

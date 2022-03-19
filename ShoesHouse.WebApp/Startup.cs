@@ -40,7 +40,12 @@ namespace ShoesHouse.WebApp
                 options.Cookie.IsEssential = true;
             });
             services.AddControllersWithViews();
-
+            IMvcBuilder builder = services.AddRazorPages();
+            var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+            if (env == Environments.Development)
+            {
+                builder.AddRazorRuntimeCompilation();
+            }
 
             //Declare DI
             services.AddTransient<ICartApiClient, CartApiClient>();

@@ -27,6 +27,28 @@
     @RenderBody()
     <partial name="_Footer" />
 </body>
-<!-- <script src="app.js"></script> -->
+<script src="/js/index.js"></script>
 <script src="/js/cart.js"></script>
+@if (ViewBag.message == "cartOrder")
+{
+    <script>
+        toast({
+            title: "Congratulations.",
+            message: "Ordered successfully.",
+            type: "success",
+            duration: 2000,
+        });
+    </script>
+}
+@if (ViewBag.message == "updateuser")
+{
+    <script>
+        toast({
+            title: "Congratulations.",
+            message: "Update success. PLEASE Logout to Update Your Profile",
+            type: "success",
+            duration: 2000,
+        });
+    </script>
+}
 </html>

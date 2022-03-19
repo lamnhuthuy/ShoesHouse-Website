@@ -43,6 +43,7 @@ namespace ShoesHouse.AdminApp.Controllers
             ViewBag.ProductAmount = listpr.Count();
             ViewBag.OrderAmount = listorder.Count();
             ViewBag.UserAmount = listuser.Count();
+
             return View();
         }
 
